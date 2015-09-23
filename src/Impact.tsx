@@ -1,5 +1,6 @@
 /// <reference path="../typings/react/react-global.d.ts" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
+/// <reference path="../typings/semver/semver.d.ts" />
 
 interface Dependency {
 	name: string;
@@ -31,10 +32,22 @@ interface Library {
 
 interface ImpactIndex {
 	version: string;
-	libraries: Array<Library>
+	libraries: Array<Library>;
 }
 
-class Result extends React.Component<{library: Library}, {}> {
+function SortLibrary(a: Library, b: Library) {
+	return b.stars - a.stars;
+}
+
+/*
+function SortVersion(a: Version, b: Version) {
+	if (semver.gt(a, b)) return 1;
+	if (semver.lt(a, b)) return -1;
+	return 0;
+}
+*/
+
+class Result extends React.Component<{key: string, library: Library}, {}> {
 	constructor() {
 		super();
 		this.state = {};
@@ -47,11 +60,12 @@ class Result extends React.Component<{library: Library}, {}> {
 		var stars = lib.stars;
 
 		var vkeys = Object.keys(lib.versions);
+		//var vlist = vkeys.map((k) => lib.versions[k]).sort(SortVersion)
+
 		var versions: JSX.Element[] = vkeys.map((k): JSX.Element => {
 			var vdata = lib.versions[k];
 			var zip = vdata.zipball_url;
-			return <div className="label label-success vspan breaker">{k}</div>
-			//return <button type="button" data-disable="true" className="btn btn-sm btn-default">{k}</button>
+			return <div key={k} className="label label-success vspan breaker">{k}</div>
 		});
 
 		var header = <h4 className="list-group-item-heading">{name}</h4>;
@@ -59,15 +73,19 @@ class Result extends React.Component<{library: Library}, {}> {
 			header = <h4 className="list-group-item-heading"><a href={homepage}>{name}</a></h4>;
 		}
 		return <div className="list-group-item">
-			<p className="pullright"><button type="button" className="btn btn-default btn-sm">Stars: {stars}</button></p>
+			<p className="pullright">
+              <button type="button" className="btn btn-default btn-sm">
+                Stars: {stars}
+              </button>
+            </p>
 			{header}
-			<p className="list-group-item-text">{this.props.library.description}
-			<br/>
+			<p className="list-group-item-text">
+              {this.props.library.description}
 			</p>
 			<p className="centered">
-			{versions}
+			  {versions}
 		    </p>
-			</div>;
+		  </div>;
 	}
 }
 
@@ -85,19 +103,14 @@ class ImpactState {
 			this.index.libraries.forEach((lib) => {
 				var inname = lib.name.toLowerCase().indexOf(t)>-1;
 				var indesc = lib.description.toLowerCase().indexOf(t)>-1;
+
 				if (inname || indesc) {
 					this.results.push(lib);
 				}
 			});
 
-			this.results = this.results.sort((a: Library, b: Library) => {
-				return b.stars - a.stars;
-			});
-			// TODO: Set results
-			console.log("Should search for term ", term);
-			console.log("Results: ", this.results);
+			this.results.sort(SortLibrary);
 		}
-		//console.log("New state", this);
 	}
 }
 
@@ -108,62 +121,51 @@ class Impact extends React.Component<{}, ImpactState> {
 	}
 
 	componentDidMount() {
-		//console.log("Mounted");
-
 		// TODO: Make a prop
 		var source = "http://impact.github.io/impact_index.json";
 
-		//console.log("Loading");
 		$.get(source, (result) => {
 			this.setState(new ImpactState(this.state.term, result))
-			console.log("Loaded");
 		})
 	}
 
 	handleChange(event) {
-		//console.log("this = ", this);
-		//console.log("this.state = ", this.state);
-		//console.log("Change: ", event);
 		var term: string = event.target.value;
-		//console.log("Term = ", term);
-		//console.log("Current state = ", this.state);
 		this.setState(new ImpactState(term, this.state.index))
 	}
 
 	render() {
-		console.log("State at render: ", this.state);
 		var term = this.state.term;
-		console.log("Rendering with term ", term);
-		var relems: JSX.Element[] = this.state.results.map((result) => {
-			return <Result library={result}/>;
+		var relems: JSX.Element[] = this.state.results.map((result: Library) => {
+			var key: string = result.name;
+			return <Result key={key} library={result}/>;
 		});
 
 		return (
-				<div className="container-fluid">
-				<div className="row">
-
-				<div className="col-lg-12 col-md-12 col-sm-12 centered">
-				<img src="img/logo_glossy.svg"/>
+			<div className="container-fluid">
+              <div className="row">
+				<div className="col-lg-10 col-lg-offset-1 centered">
+				  <img src="img/logo_glossy.svg"/>
 				</div>
 
 				<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
 
-				<div className="input-group">
-				<input type="text" className="form-control" value={term} placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
-				<span className="input-group-btn">
-				<button className="btn btn-default" type="button"><span className="glyphicon glyphicon-search"></span></button>
-				</span>
+				  <div className="input-group">
+				    <input type="text" className="form-control" value={term}
+                           placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
+				    <span className="input-group-btn">
+				      <button className="btn btn-default" type="button">
+                        <span className="glyphicon glyphicon-search"></span>
+                      </button>
+                    </span>
+				  </div>
 				</div>
-				</div>
+              </div>
 
-
-			    </div>
-
-				<div className="list-group col-lg-4 col-lg-offset-4 rgroup col-md-12">
+              <div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
 				{relems}
-				</div>
-
-				</div>
+              </div>
+            </div>
 		);
 	}
 }
