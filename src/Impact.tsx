@@ -41,10 +41,33 @@ class Result extends React.Component<{library: Library}, {}> {
 	}
 
 	render() {
-		return <a href="#" className="list-group-item">
-			<h4 className="list-group-item-heading">{this.props.library.name}</h4>
+		var lib = this.props.library;
+		var name = lib.name;
+		var homepage = lib.homepage;
+		var stars = lib.stars;
+
+		var vkeys = Object.keys(lib.versions);
+		var versions: JSX.Element[] = vkeys.map((k): JSX.Element => {
+			var vdata = lib.versions[k];
+			var zip = vdata.zipball_url;
+			return <span className="label label-success vspan">{k}</span>
+			//return <button type="button" data-disable="true" className="btn btn-sm btn-default">{k}</button>
+		});
+
+		var header = <h4 className="list-group-item-heading">{name}</h4>;
+		if (homepage!="") {
+			header = <h4 className="list-group-item-heading"><a href={homepage}>{name}</a></h4>;
+		}
+		return <div className="list-group-item">
+			<p className="pullright"><button type="button" className="btn btn-default btn-sm">Stars: {stars}</button></p>
+			{header}
 			<p className="list-group-item-text">{this.props.library.description}</p>
-			</a>;
+			<p>
+			<div className="btn-group" role="group" aria-label="...">
+			{versions}
+			</div>
+			</p>
+			</div>;
 	}
 }
 
@@ -64,6 +87,10 @@ class ImpactState {
 				if (inname) {
 					this.results.push(lib);
 				}
+			});
+
+			this.results = this.results.sort((a: Library, b: Library) => {
+				return b.stars - a.stars;
 			});
 			// TODO: Set results
 			console.log("Should search for term ", term);
@@ -131,7 +158,7 @@ class Impact extends React.Component<{}, ImpactState> {
 
 			    </div>
 
-				<div className="list-group col-lg-6 col-lg-offset-3 rgroup">
+				<div className="list-group col-lg-8 col-lg-offset-2 rgroup">
 				{relems}
 				</div>
 

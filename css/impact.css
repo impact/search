@@ -9,3 +9,12 @@
 .rgroup {
 	margin-top: 20px;
 }
+
+.pullright {
+	float: right;
+}
+
+.vspan {
+	margin-left: 2px;
+	margin-right: 2px;
+}
