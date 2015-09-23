@@ -1,0 +1,24 @@
+{
+  "name": "impact-app",
+  "version": "0.1.0",
+  "authors": [
+    "Michael Tiller <michael.tiller@gmail.com>"
+  ],
+  "description": "A web application for impact",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "homepage": "http://impact.github.io",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.13.3"
+  }
+}
