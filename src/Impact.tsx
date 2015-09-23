@@ -1,39 +1,7 @@
 /// <reference path="../typings/react/react-global.d.ts" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/semver/semver.d.ts" />
-
-interface Dependency {
-	name: string;
-	version: string;
-}
-
-interface Version {
-	version: string;
-	tarball_url: string;
-	zipball_url: string;
-	path: string;
-	isfile: boolean;
-	dependencies: Array<Dependency>;
-	sha: string;
-}
-
-interface Library {
-	name: string;
-	uri: string;
-	versions: { [version: string]: Version };
-	owner_uri: string;
-	email: string;
-	homepage: string;
-	repository_uri: string;
-	repository_format: string;
-	description: string;
-	stars: number;
-}
-
-interface ImpactIndex {
-	version: string;
-	libraries: Array<Library>;
-}
+/// <reference path="./Index.tsx" />
 
 function SortLibrary(a: Library, b: Library) {
 	return b.stars - a.stars;
@@ -46,48 +14,6 @@ function SortVersion(a: Version, b: Version) {
 	return 0;
 }
 */
-
-class Result extends React.Component<{key: string, library: Library}, {}> {
-	constructor() {
-		super();
-		this.state = {};
-	}
-
-	render() {
-		var lib = this.props.library;
-		var name = lib.name;
-		var homepage = lib.homepage;
-		var stars = lib.stars;
-
-		var vkeys = Object.keys(lib.versions);
-		//var vlist = vkeys.map((k) => lib.versions[k]).sort(SortVersion)
-
-		var versions: JSX.Element[] = vkeys.map((k): JSX.Element => {
-			var vdata = lib.versions[k];
-			var zip = vdata.zipball_url;
-			return <div key={k} className="label label-success vspan breaker">{k}</div>
-		});
-
-		var header = <h4 className="list-group-item-heading">{name}</h4>;
-		if (homepage!="") {
-			header = <h4 className="list-group-item-heading"><a href={homepage}>{name}</a></h4>;
-		}
-		return <div className="list-group-item">
-			<p className="pullright">
-              <button type="button" className="btn btn-default btn-sm">
-                Stars: {stars}
-              </button>
-            </p>
-			{header}
-			<p className="list-group-item-text">
-              {this.props.library.description}
-			</p>
-			<p className="centered">
-			  {versions}
-		    </p>
-		  </div>;
-	}
-}
 
 class ImpactState {
 	public results: Array<Library>;
