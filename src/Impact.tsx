@@ -14,13 +14,20 @@ class Impact extends React.Component<{}, ImpactState> {
 		return (
 			<div className="container-fluid">
 				<div className="row">
-				<div className="jumbotron col-lg-6 col-lg-offset-3">
+
+				<div className="col-lg-12 centered">
 				<img src="img/logo_glossy.svg"/>
-				<p>...</p>
-				<p>
-				<a className="btn btn-primary btn-lg" href="#"
-			role="button">Learn more</a></p>
 				</div>
+
+				<div className="col-lg-4 col-lg-offset-4 centered">
+				<div className="input-group">
+				<input type="text" className="form-control" placeholder="Search for..."/>
+				<span className="input-group-btn">
+				<button className="btn btn-default" type="button"><span className="glyphicon glyphicon-search"></span></button>
+				</span>
+				</div>
+				</div>
+
 				</div>
 				</div>
 		);
