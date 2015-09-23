@@ -1,18 +1,117 @@
 /// <reference path="../typings/react/react-global.d.ts" />
+/// <reference path="../typings/jquery/jquery.d.ts" />
+
+interface Dependency {
+	name: string;
+	version: string;
+}
+
+interface Version {
+	version: string;
+	tarball_url: string;
+	zipball_url: string;
+	path: string;
+	isfile: boolean;
+	dependencies: Array<Dependency>;
+	sha: string;
+}
+
+interface Library {
+	name: string;
+	uri: string;
+	versions: { [version: string]: Version };
+	owner_uri: string;
+	email: string;
+	homepage: string;
+	repository_uri: string;
+	repository_format: string;
+	description: string;
+	stars: number;
+}
+
+interface ImpactIndex {
+	version: string;
+	libraries: Array<Library>
+}
+
+class Result extends React.Component<{library: Library}, {}> {
+	constructor() {
+		super();
+		this.state = {};
+	}
+
+	render() {
+		return <a href="#" className="list-group-item">
+			<h4 className="list-group-item-heading">{this.props.library.name}</h4>
+			<p className="list-group-item-text">{this.props.library.description}</p>
+			</a>;
+	}
+}
 
 class ImpactState {
-	  constructor(public term: string) {}
+	public results: Array<Library>;
+
+	constructor(public term: string, public index: ImpactIndex) {
+		// TODO: Compute results
+		this.results = [];
+
+		// If we have an index and a term, compute results
+		if (index!=null && term!="" && term!=null) {
+			var t = term.toLowerCase();
+
+			this.index.libraries.forEach((lib) => {
+				var inname = lib.name.toLowerCase().indexOf(t)>-1;
+				if (inname) {
+					this.results.push(lib);
+				}
+			});
+			// TODO: Set results
+			console.log("Should search for term ", term);
+			console.log("Results: ", this.results);
+		}
+		//console.log("New state", this);
+	}
 }
 
 class Impact extends React.Component<{}, ImpactState> {
-	  constructor() {
-	  	  super();
-		  this.state = new ImpactState("");
-	  }
+	constructor() {
+	  	super();
+		this.state = new ImpactState("", null);
+	}
+
+	componentDidMount() {
+		//console.log("Mounted");
+
+		// TODO: Make a prop
+		var source = "http://impact.github.io/impact_index.json";
+
+		//console.log("Loading");
+		$.get(source, (result) => {
+			this.setState(new ImpactState(this.state.term, result))
+			console.log("Loaded");
+		})
+	}
+
+	handleChange(event) {
+		//console.log("this = ", this);
+		//console.log("this.state = ", this.state);
+		//console.log("Change: ", event);
+		var term: string = event.target.value;
+		//console.log("Term = ", term);
+		//console.log("Current state = ", this.state);
+		this.setState(new ImpactState(term, this.state.index))
+	}
 
 	render() {
+		console.log("State at render: ", this.state);
+		var term = this.state.term;
+		console.log("Rendering with term ", term);
+		var relems: JSX.Element[] = this.state.results.map((result) => {
+			return <Result library={result}/>;
+		});
+
 		return (
-			<div className="container-fluid">
+				<div className="container-fluid">
 				<div className="row">
 
 				<div className="col-lg-12 centered">
@@ -20,15 +119,22 @@ class Impact extends React.Component<{}, ImpactState> {
 				</div>
 
 				<div className="col-lg-4 col-lg-offset-4 centered">
+
 				<div className="input-group">
-				<input type="text" className="form-control" placeholder="Search for..."/>
+				<input type="text" className="form-control" value={term} placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
 				<span className="input-group-btn">
 				<button className="btn btn-default" type="button"><span className="glyphicon glyphicon-search"></span></button>
 				</span>
 				</div>
 				</div>
 
+
+			    </div>
+
+				<div className="list-group col-lg-6 col-lg-offset-3 rgroup">
+				{relems}
 				</div>
+
 				</div>
 		);
 	}
