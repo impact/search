@@ -50,7 +50,7 @@ class Result extends React.Component<{library: Library}, {}> {
 		var versions: JSX.Element[] = vkeys.map((k): JSX.Element => {
 			var vdata = lib.versions[k];
 			var zip = vdata.zipball_url;
-			return <span className="label label-success vspan">{k}</span>
+			return <div className="label label-success vspan breaker">{k}</div>
 			//return <button type="button" data-disable="true" className="btn btn-sm btn-default">{k}</button>
 		});
 
@@ -61,12 +61,12 @@ class Result extends React.Component<{library: Library}, {}> {
 		return <div className="list-group-item">
 			<p className="pullright"><button type="button" className="btn btn-default btn-sm">Stars: {stars}</button></p>
 			{header}
-			<p className="list-group-item-text">{this.props.library.description}</p>
-			<p>
-			<div className="btn-group" role="group" aria-label="...">
-			{versions}
-			</div>
+			<p className="list-group-item-text">{this.props.library.description}
+			<br/>
 			</p>
+			<p className="centered">
+			{versions}
+		    </p>
 			</div>;
 	}
 }
@@ -84,7 +84,8 @@ class ImpactState {
 
 			this.index.libraries.forEach((lib) => {
 				var inname = lib.name.toLowerCase().indexOf(t)>-1;
-				if (inname) {
+				var indesc = lib.description.toLowerCase().indexOf(t)>-1;
+				if (inname || indesc) {
 					this.results.push(lib);
 				}
 			});
@@ -141,11 +142,11 @@ class Impact extends React.Component<{}, ImpactState> {
 				<div className="container-fluid">
 				<div className="row">
 
-				<div className="col-lg-12 centered">
+				<div className="col-lg-12 col-md-12 col-sm-12 centered">
 				<img src="img/logo_glossy.svg"/>
 				</div>
 
-				<div className="col-lg-4 col-lg-offset-4 centered">
+				<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
 
 				<div className="input-group">
 				<input type="text" className="form-control" value={term} placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
@@ -158,7 +159,7 @@ class Impact extends React.Component<{}, ImpactState> {
 
 			    </div>
 
-				<div className="list-group col-lg-8 col-lg-offset-2 rgroup">
+				<div className="list-group col-lg-4 col-lg-offset-4 rgroup col-md-12">
 				{relems}
 				</div>
 
