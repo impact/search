@@ -7,7 +7,6 @@
 		"jsx": "react"
 	},
 	"files": [
-		"App.ts",
 		"Impact.tsx",
 		"Result.tsx",
 		"Index.ts",
