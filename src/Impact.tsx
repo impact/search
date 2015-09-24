@@ -1,4 +1,5 @@
 /// <reference path="../typings/react/react-global.d.ts" />
+/// <reference path="../typings/react-router/react-router.d.ts" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/semver/semver.d.ts" />
 /// <reference path="./Index.tsx" />
