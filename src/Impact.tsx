@@ -2,24 +2,27 @@
 /// <reference path="../typings/react-router/react-router.d.ts" />
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/semver/semver.d.ts" />
-/// <reference path="./Index.tsx" />
 
-function SortLibrary(a: Library, b: Library) {
+import Index = require("./Index");
+import Result = require("./Result");
+//import * as Index from "./Index";
+
+function SortLibrary(a: Index.Library, b: Index.Library) {
 	return b.stars - a.stars;
 }
 
 /*
-function SortVersion(a: Version, b: Version) {
-	if (semver.gt(a, b)) return 1;
-	if (semver.lt(a, b)) return -1;
-	return 0;
-}
-*/
+   function SortVersion(a: Version, b: Version) {
+   if (semver.gt(a, b)) return 1;
+   if (semver.lt(a, b)) return -1;
+   return 0;
+   }
+ */
 
 class ImpactState {
-	public results: Array<Library>;
+	public results: Array<Index.Library>;
 
-	constructor(public term: string, public index: ImpactIndex) {
+	constructor(public term: string, public index: Index.ImpactIndex) {
 		// TODO: Compute results
 		this.results = [];
 
@@ -41,12 +44,12 @@ class ImpactState {
 	}
 }
 
-class Impact extends React.Component<{}, ImpactState> {
+export class Impact extends React.Component<{}, ImpactState> {
 	static Mount(node: Element) {
 		//var routes: Router.Route = (
 		//<Route name="root" path="/" handler={Impact}>
 		//	</Route>
-        //);
+		//);
 
 		var html = <Impact/>
 		React.render(html, node);
@@ -72,9 +75,9 @@ class Impact extends React.Component<{}, ImpactState> {
 
 	render() {
 		var term = this.state.term;
-		var relems: JSX.Element[] = this.state.results.map((result: Library) => {
+		var relems: JSX.Element[] = this.state.results.map((result: Index.Library) => {
 			var key: string = result.name;
-			return <Result key={key} library={result}/>;
+			return <Result.Component key={key} library={result}/>;
 		});
 
 		var logo =
@@ -110,7 +113,7 @@ class Impact extends React.Component<{}, ImpactState> {
 				<div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
 					{relems}
 				</div>
-            </div>
+			</div>
 		);
 	}
 }

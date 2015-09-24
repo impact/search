@@ -1,9 +1,9 @@
-interface Dependency {
+export interface Dependency {
 	name: string;
 	version: string;
 }
 
-interface Version {
+export interface Version {
 	version: string;
 	tarball_url: string;
 	zipball_url: string;
@@ -13,7 +13,7 @@ interface Version {
 	sha: string;
 }
 
-interface Library {
+export interface Library {
 	name: string;
 	uri: string;
 	versions: { [version: string]: Version };
@@ -26,7 +26,7 @@ interface Library {
 	stars: number;
 }
 
-interface ImpactIndex {
+export interface ImpactIndex {
 	version: string;
 	libraries: Array<Library>;
 }
