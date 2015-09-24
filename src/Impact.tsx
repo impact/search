@@ -41,6 +41,9 @@ class ImpactState {
 }
 
 class Impact extends React.Component<{}, ImpactState> {
+	static Mount(node: Element) {
+		React.render(<Impact/>, node);
+	}
 	constructor() {
 	  	super();
 		this.state = new ImpactState("", null);
