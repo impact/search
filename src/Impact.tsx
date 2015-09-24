@@ -72,7 +72,7 @@ class Impact extends React.Component<{}, ImpactState> {
 			<img id="logo" src="img/logo_glossy.svg"/>
 		</div>
 
-		var search =
+		var content =
 		<div className="input-group">
 			<input type="text" className="form-control" value={term}
 				placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
@@ -83,13 +83,17 @@ class Impact extends React.Component<{}, ImpactState> {
 			</span>
 		</div>;
 
+		if (this.state.index==null) {
+			content = <img width="50%" src="img/spinner.svg"/>
+		}
+
 		return (
 			<div className="container-fluid">
 				<div className="row">
 					{logo}
 
 					<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
-						{search}
+						{content}
 					</div>
 				</div>
 
