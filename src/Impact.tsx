@@ -43,7 +43,13 @@ class ImpactState {
 
 class Impact extends React.Component<{}, ImpactState> {
 	static Mount(node: Element) {
-		React.render(<Impact/>, node);
+		//var routes: Router.Route = (
+		//<Route name="root" path="/" handler={Impact}>
+		//	</Route>
+        //);
+
+		var html = <Impact/>
+		React.render(html, node);
 	}
 	constructor() {
 	  	super();
