@@ -1,4 +1,5 @@
 import Index = require("./Index");
+import React = require("react");
 
 export class Component extends React.Component<{key: string, library: Index.Library}, {}> {
 	constructor() {
