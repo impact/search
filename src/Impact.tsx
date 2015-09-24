@@ -23,21 +23,22 @@ class ImpactState {
 		// TODO: Compute results
 		this.results = [];
 
+		if (index==null) return;
+		if (term=="" || term==null) return;
+
 		// If we have an index and a term, compute results
-		if (index!=null && term!="" && term!=null) {
-			var t = term.toLowerCase();
+		var t = term.toLowerCase();
 
-			this.index.libraries.forEach((lib) => {
-				var inname = lib.name.toLowerCase().indexOf(t)>-1;
-				var indesc = lib.description.toLowerCase().indexOf(t)>-1;
+		this.index.libraries.forEach((lib) => {
+			var inname = lib.name.toLowerCase().indexOf(t)>-1;
+			var indesc = lib.description.toLowerCase().indexOf(t)>-1;
 
-				if (inname || indesc) {
-					this.results.push(lib);
-				}
-			});
+			if (inname || indesc) {
+				this.results.push(lib);
+			}
+		});
 
-			this.results.sort(SortLibrary);
-		}
+		this.results.sort(SortLibrary);
 	}
 }
 
@@ -74,7 +75,7 @@ export class Application extends React.Component<{}, ImpactState> {
 	render() {
 		var term = this.state.term;
 		var relems: JSX.Element[] = this.state.results.map((result: Index.Library) => {
-			var key: string = result.name;
+			var key: string = result.uri+" "+result.name;
 			return <Result.Component key={key} library={result}/>;
 		});
 
