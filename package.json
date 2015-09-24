@@ -9,6 +9,7 @@
   "author": "Michael Tiller (michael.tiller@gmail.com)",
   "license": "MIT",
   "devDependencies": {
+    "grunt": "^0.4.5",
     "typescript": "^1.6.2"
   }
 }
