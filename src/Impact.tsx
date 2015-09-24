@@ -91,7 +91,7 @@ export class Application extends React.Component<{}, ImpactState> {
 			}
 		}
 
-		var content =
+		var searchbox =
 		<div className="input-group">
 			<input ref={setFocus} type="text" className="form-control" value={term}
 				placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
@@ -102,24 +102,32 @@ export class Application extends React.Component<{}, ImpactState> {
 			</span>
 		</div>;
 
+		var content =
+		<div className="row">
+			<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
+				{searchbox}
+			</div>
+			{this.state.results.length>0 ? 
+			<div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
+				{relems}
+			</div> : null}
+		</div>
 
 		if (this.state.index==null) {
-			content = <img width="50%" src="img/spinner.svg"/>
+			content = null
 		}
 
 		return (
 			<div className="container-fluid">
 				<div className="row">
 					{logo}
-
-					<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
-						{content}
+				</div>
+				<div className="row">
+					<div className="col-lg-10 col-lg-offset-1 centered">
+						<p className="lead">A Modelica Search Engine</p>
 					</div>
 				</div>
-
-				<div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
-					{relems}
-				</div>
+				{content}
 			</div>
 		);
 	}
