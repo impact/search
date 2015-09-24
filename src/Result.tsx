@@ -1,5 +1,12 @@
 import Index = require("./Index");
 import React = require("react");
+import semver = require('semver');
+
+function SortVersion(a: string, b: string) {
+	if (semver.gt(a, b)) return -1;
+	if (semver.lt(a, b)) return 1;
+	return 0;
+}
 
 export class Component extends React.Component<{key: string, library: Index.Library}, {}> {
 	constructor() {
@@ -13,7 +20,7 @@ export class Component extends React.Component<{key: string, library: Index.Libr
 		var homepage = lib.homepage;
 		var stars = lib.stars;
 
-		var vkeys = Object.keys(lib.versions);
+		var vkeys = Object.keys(lib.versions).sort(SortVersion);
 
 		var versions: JSX.Element[] = vkeys.map((k): JSX.Element => {
 			var vdata = lib.versions[k];

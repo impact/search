@@ -1,5 +1,4 @@
 import $ = require('jquery');
-import semver = require('semver');
 import React = require('react');
 import ReactRouter = require('react-router');
 
@@ -8,12 +7,6 @@ import Result = require("./Result");
 
 function SortLibrary(a: Index.Library, b: Index.Library) {
 	return b.stars - a.stars;
-}
-
-function SortVersion(a: Index.Version, b: Index.Version) {
-	if (semver.gt(a.version, b.version)) return 1;
-	if (semver.lt(a.version, b.version)) return -1;
-	return 0;
 }
 
 class ImpactState {
