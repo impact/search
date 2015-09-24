@@ -19,6 +19,11 @@ class ImpactState {
 		if (index==null) return;
 		if (term=="" || term==null) return;
 
+		if (term=="*") {
+			this.results = this.index.libraries.sort(SortLibrary);
+			return;
+		}
+
 		// If we have an index and a term, compute results
 		var t = term.toLowerCase();
 
@@ -37,11 +42,16 @@ class ImpactState {
 
 export class Application extends React.Component<{}, ImpactState> {
 	static Mount(node: Element) {
-		//var routes: Router.Route = (
-		//<Route name="root" path="/" handler={Impact}>
-		//	</Route>
-		//);
+		var routes =
+		<ReactRouter.Route name="root" path="/" handler={Application}>
+		</ReactRouter.Route>;
 
+		//var router = ReactRouter.createRoutes(routes)
+		//console.log("ReactRouter = ", ReactRouter);
+
+		//ReactRouter.Router.run(routes, function (Handler: new() => React.Component<any, any>) {
+		//  React.render(<Handler/>, node);
+		//});
 		var html = <Application/>;
 		React.render(html, node);
 	}
