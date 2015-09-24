@@ -25,11 +25,15 @@ class Result extends React.Component<{key: string, library: Library}, {}> {
 		if (homepage!="") {
 			header = <h4 className="list-group-item-heading"><a href={homepage}>{name}</a></h4>;
 		}
+
+		var rating = 
+		<button type="button" className="btn btn-default btn-sm">
+			Stars: {stars}
+        </button>
+
 		return <div className="list-group-item">
 			<p className="pullright">
-              <button type="button" className="btn btn-default btn-sm">
-                Stars: {stars}
-              </button>
+				{rating}
             </p>
 			{header}
 			<p className="list-group-item-text">

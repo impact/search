@@ -67,31 +67,35 @@ class Impact extends React.Component<{}, ImpactState> {
 			return <Result key={key} library={result}/>;
 		});
 
+		var logo =
+		<div className="col-lg-10 col-lg-offset-1 centered">
+			<img id="logo" src="img/logo_glossy.svg"/>
+		</div>
+
+		var search =
+		<div className="input-group">
+			<input type="text" className="form-control" value={term}
+				placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
+			<span className="input-group-btn">
+				<button className="btn btn-default" type="button">
+					<span className="glyphicon glyphicon-search"></span>
+				</button>
+			</span>
+		</div>;
+
 		return (
-		
 			<div className="container-fluid">
-              <div className="row">
-				<div className="col-lg-10 col-lg-offset-1 centered">
-				  <img id="logo" src="img/logo_glossy.svg"/>
+				<div className="row">
+					{logo}
+
+					<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
+						{search}
+					</div>
 				</div>
 
-				<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
-
-				  <div className="input-group">
-				    <input type="text" className="form-control" value={term}
-                           placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
-				    <span className="input-group-btn">
-				      <button className="btn btn-default" type="button">
-                        <span className="glyphicon glyphicon-search"></span>
-                      </button>
-                    </span>
-				  </div>
+				<div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
+					{relems}
 				</div>
-              </div>
-
-              <div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
-				{relems}
-              </div>
             </div>
 		);
 	}
