@@ -22,3 +22,7 @@
 .breaker {
 	display: inline-block;
 }
+
+@media only screen and (max-device-width: 480px) {
+	#logo { width: 200px; }
+}

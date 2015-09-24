@@ -68,10 +68,11 @@ class Impact extends React.Component<{}, ImpactState> {
 		});
 
 		return (
+		
 			<div className="container-fluid">
               <div className="row">
 				<div className="col-lg-10 col-lg-offset-1 centered">
-				  <img width="400px" src="img/logo_glossy.svg"/>
+				  <img id="logo" src="img/logo_glossy.svg"/>
 				</div>
 
 				<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
