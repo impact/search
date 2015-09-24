@@ -3,7 +3,7 @@
 		"module": "commonjs",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"out": "../js/modules.js",
+		"outDir": "../js",
 		"jsx": "react"
 	},
 	"files": [
