@@ -1,23 +1,20 @@
-/// <reference path="../typings/react/react-global.d.ts" />
-/// <reference path="../typings/react-router/react-router.d.ts" />
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../typings/semver/semver.d.ts" />
+import $ = require('jquery');
+import semver = require('semver');
+import React = require('react');
+import ReactRouter = require('react-router');
 
 import Index = require("./Index");
 import Result = require("./Result");
-//import * as Index from "./Index";
 
 function SortLibrary(a: Index.Library, b: Index.Library) {
 	return b.stars - a.stars;
 }
 
-/*
-   function SortVersion(a: Version, b: Version) {
-   if (semver.gt(a, b)) return 1;
-   if (semver.lt(a, b)) return -1;
-   return 0;
-   }
- */
+function SortVersion(a: Index.Version, b: Index.Version) {
+	if (semver.gt(a.version, b.version)) return 1;
+	if (semver.lt(a.version, b.version)) return -1;
+	return 0;
+}
 
 class ImpactState {
 	public results: Array<Index.Library>;
