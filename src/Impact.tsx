@@ -51,6 +51,7 @@ export class Application extends React.Component<{}, ImpactState> {
 		var html = <Application/>;
 		React.render(html, node);
 	}
+
 	constructor() {
 	  	super();
 		this.state = new ImpactState("", null);
@@ -82,9 +83,16 @@ export class Application extends React.Component<{}, ImpactState> {
 			<img id="logo" src="img/logo_glossy.svg"/>
 		</div>
 
+		var setFocus = (c: any) => {
+			var node = React.findDOMNode(c) as any;
+			if (node) {
+				node.focus();
+			}
+		}
+
 		var content =
 		<div className="input-group">
-			<input type="text" className="form-control" value={term}
+			<input ref={setFocus} type="text" className="form-control" value={term}
 				placeholder="Search for..." onChange={this.handleChange.bind(this)}/>
 			<span className="input-group-btn">
 				<button className="btn btn-default" type="button">
@@ -92,6 +100,7 @@ export class Application extends React.Component<{}, ImpactState> {
 				</button>
 			</span>
 		</div>;
+
 
 		if (this.state.index==null) {
 			content = <img width="50%" src="img/spinner.svg"/>
