@@ -44,14 +44,14 @@ class ImpactState {
 	}
 }
 
-export class Impact extends React.Component<{}, ImpactState> {
+export class Application extends React.Component<{}, ImpactState> {
 	static Mount(node: Element) {
 		//var routes: Router.Route = (
 		//<Route name="root" path="/" handler={Impact}>
 		//	</Route>
 		//);
 
-		var html = <Impact/>
+		var html = <Application/>;
 		React.render(html, node);
 	}
 	constructor() {
@@ -68,8 +68,8 @@ export class Impact extends React.Component<{}, ImpactState> {
 		})
 	}
 
-	handleChange(event) {
-		var term: string = event.target.value;
+	handleChange(event: JQueryEventObject) {
+		var term: string = (event.target as any).value;
 		this.setState(new ImpactState(term, this.state.index))
 	}
 
