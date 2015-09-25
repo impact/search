@@ -1,7 +1,13 @@
+/// <reference path="../typings/node/node.d.ts"/>
+
+// NPM Modules
 import $ = require('jquery');
 import React = require('react');
 import ReactRouter = require('react-router');
 
+var csk = require('redux');
+
+// Local Modules
 import Index = require("./Index");
 import Result = require("./Result");
 import Search = require("./Search");
