@@ -16,7 +16,7 @@
     "grunt": "^0.4.5",
     "jquery": "^2.1.4",
     "react": "^0.13.3",
-    "react-router": "^1.0.0-rc1",
+    "react-router": "^0.13.3",
     "semver": "^5.0.3",
     "style-loader": "^0.12.4",
     "ts-loader": "^0.5.5",
