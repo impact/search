@@ -37,13 +37,18 @@ export class Component extends React.Component<{key: string, library: Index.Libr
 		}
 
 		var rating = 
-		<button type="button" className="btn btn-default btn-sm">
+		<button type="button" className="btn btn-default btn-lg" disabled={true}>
 			Stars: {stars}
 		</button>
 
+		var rating2 = 
+		<span>
+			Stars: {stars}
+		</span>
+
 		return <div className="list-group-item">
 			<p className="pullright">
-				{rating}
+				{rating2}
 			</p>
 			{header}
 			<p className="list-group-item-text">
