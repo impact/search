@@ -11,6 +11,7 @@ var csk = require('redux');
 import Index = require("./Index");
 import Result = require("./Result");
 import Search = require("./Search");
+import State = require("./State");
 
 function SortLibrary(a: Index.Library, b: Index.Library) {
 	return b.stars - a.stars;
@@ -21,75 +22,28 @@ class RootState {
 	constructor() { }
 }
 
-// This is the read-only part of the interface
-export interface Observable<S> {
-	get(): S;
-}
-
-export interface Mutable<S> {
-    update(v: S): void;
-}
-
-export class SubState<S> implements Observable<S>, Mutable<S> {
-	private subscribers: Array<(nv: S, ov: S) => void>;
-	constructor(private value: S) {
-		this.subscribers = [];
-	}
-	update(v: S) {
-		var old = this.value;
-		this.value = v;
-		this.subscribers.forEach((f) => { f(v, old) })
-	}
-	get(): S { return this.value; }
-	notify(f: (nv: S, ov: S) => void) {
-		this.subscribers.push(f);
-	}
-}
-
-export class Store {
-	private index: SubState<Index.ImpactIndex>;
-
-	constructor() {
-		this.index = new SubState(null);
-	}
-
-	getIndex(): Observable<Index.ImpactIndex> {
-		return this.index;
-	}
-
-	load() {
-		var source = "http://impact.github.io/impact_index.json";
-		$.get(source, (result) => {
-			this.index = result;
-		})
-	}
-}
-
 export class Application extends React.Component<{}, RootState> {
 	static Mount(node: Element) {
-		var store = new Store();
+		var store = new State.Store();
 		store.load();
 
-		var source = "http://impact.github.io/impact_index.json";
+		var Route = ReactRouter.Route;
 
-		$.get(source, (result) => {
-			var Route = ReactRouter.Route;
+		var SearchContent = React.createClass({
+			render() {
+				console.log("Factory has index as: ", store.getIndex());
+				return <Search.Component index={store.getIndex()}/>;
+			}
+		});
 
-			var SearchContent = React.createClass({
-				render() {
-					return <Search.Component index={result}/>;
-				}
-			});
+		var routes =
+		<Route handler={Application} path="/" name="root">
+		<ReactRouter.DefaultRoute handler={SearchContent}/>
+		</Route>
 
-			var routes =
-			<Route handler={Application} path="/" name="root">
-			<ReactRouter.DefaultRoute handler={SearchContent}/>
-			</Route>
-
-			ReactRouter.run(routes, ReactRouter.HistoryLocation, function (Handler) {
-				React.render(<Handler/>, node);
-			});
-		})
+		ReactRouter.run(routes, ReactRouter.HistoryLocation, function (Handler) {
+			React.render(<Handler/>, node);
+		});
 	}
 
 	constructor() {

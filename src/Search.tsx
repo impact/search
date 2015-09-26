@@ -1,6 +1,7 @@
 import React = require('react');
 import Index = require("./Index");
 import Result = require("./Result");
+import State = require("./State");
 
 function SortLibrary(a: Index.Library, b: Index.Library) {
 	return b.stars - a.stars;
@@ -35,7 +36,7 @@ function computeResults(term: string, index: Index.ImpactIndex): Index.Library[]
 }
 
 class SearchProps {
-	public index: Index.ImpactIndex;
+	public index: State.Observable<Index.ImpactIndex>;
 }
 
 class SearchState {
@@ -48,14 +49,26 @@ export class Component extends React.Component<SearchProps, SearchState> {
 		this.state = new SearchState("");
 	}
 
+	componentDidMount() {
+		console.log("When mounted, props = ", this.props);
+		this.props.index.subscribe((v) => {
+			console.log("Notified of change in index to ", v);
+			this.forceUpdate();
+		})
+	}
+
 	handleChange(event: JQueryEventObject) {
 		var term: string = (event.target as any).value;
 		this.setState(new SearchState(term))
 	}
 
 	render() {
+		console.log("Rendering Search");
 		var term = this.state.term;
-		var results = computeResults(this.state.term, this.props.index);
+		var index = this.props.index.get();
+
+		console.log("index value = ", index);
+		var results = computeResults(this.state.term, index);
 
 		var relems: JSX.Element[] = results.map((result: Index.Library) => {
 			var key: string = result.uri+" "+result.name;
