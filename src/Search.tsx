@@ -49,9 +49,9 @@ class SearchProps {
 // This mirrors the contents of "SearchProps" to show the actual states.
 // This cannot have methods because React will strip them on its internal
 // representation.
-// TODO: Make an interface?
-class SearchState {
-	constructor(public term: string, public index: ImpactIndex) { }
+interface SearchState {
+	term?: string;
+	index?: ImpactIndex;
 }
 
 // A search component
@@ -60,14 +60,14 @@ export class Component extends React.Component<SearchProps, SearchState> {
 	  	super();
 		// Not really necessary since this will be updated as soon as we
 		// register our states with the Store.
-		this.state = new SearchState("", null);
+		this.state = {};
 	}
 
 	componentDidMount() {
 		// Ask the store to automatically update our states when changes
 		// occur.
-		this.props.index.link(this, "index");
-		this.props.term.link(this, "term");
+		this.props.index.safelink(this, (v): SearchState => { return { index: v }})
+		this.props.term.safelink(this, (v): SearchState => { return { term: v }})
 	}
 
 	handleChange(event: JQueryEventObject) {
