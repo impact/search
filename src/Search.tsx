@@ -1,14 +1,17 @@
 import React = require('react');
-import Index = require("./Index");
+
+// TODO: use exports inside this
 import Result = require("./Result");
-import State = require("./State");
+
+import { ImpactIndex, Library } from './Index';
+import { Observable } from './State';
 
 // This function takes a given search term (as a string) and an index structure
 // and returns a list of libraries that match the search term.
-function computeResults(term: string, index: Index.ImpactIndex): Index.Library[] {
+function computeResults(term: string, index: ImpactIndex): Library[] {
 	// TODO: Compute results
-	var results: Index.Library[] = [];
-	var sf = (a: Index.Library, b: Index.Library) => b.stars - a.stars;
+	var results: Library[] = [];
+	var sf = (a: Library, b: Library) => b.stars - a.stars;
 
 	if (index==null) return results;
 	if (term=="" || term==null) return results;
@@ -19,9 +22,10 @@ function computeResults(term: string, index: Index.ImpactIndex): Index.Library[]
 	}
 
 	// If we have an index and a term, compute results
+	// TODO: Tokenize and trim and then do an "and" across terms
 	var t = term.toLowerCase();
 
-	index.libraries.forEach((lib: Index.Library) => {
+	index.libraries.forEach((lib: Library) => {
 		var inname = lib.name.toLowerCase().indexOf(t)>-1;
 		var indesc = lib.description.toLowerCase().indexOf(t)>-1;
 
@@ -38,13 +42,16 @@ function computeResults(term: string, index: Index.ImpactIndex): Index.Library[]
 // our interest in specific substates and keep them automatically syncronized
 // with this components state (see calls to 'register' below)
 class SearchProps {
-	public index: State.Observable<Index.ImpactIndex>;
-	public term: State.Observable<string>;
+	public index: Observable<ImpactIndex>;
+	public term: Observable<string>;
 }
 
 // This mirrors the contents of "SearchProps" to show the actual states.
+// This cannot have methods because React will strip them on its internal
+// representation.
+// TODO: Make an interface?
 class SearchState {
-	constructor(public term: string, public index: Index.ImpactIndex) { }
+	constructor(public term: string, public index: ImpactIndex) { }
 }
 
 // A search component
@@ -59,10 +66,11 @@ export class Component extends React.Component<SearchProps, SearchState> {
 	componentDidMount() {
 		// Ask the store to automatically update our states when changes
 		// occur.
-		this.props.index.register(this, "index");
-		this.props.term.register(this, "term");
+		this.props.index.link(this, "index");
+		this.props.term.link(this, "term");
 	}
 
+	// TODO: Use an action here...
 	handleChange(event: JQueryEventObject) {
 		var term: string = (event.target as any).value;
 		this.setState(new SearchState(term, this.state.index));
@@ -82,7 +90,7 @@ export class Component extends React.Component<SearchProps, SearchState> {
 		var results = computeResults(this.state.term, index);
 
 		// Generate Result components for these results.
-		var relems: JSX.Element[] = results.map((result: Index.Library) => {
+		var relems: JSX.Element[] = results.map((result: Library) => {
 			var key: string = result.uri+" "+result.name;
 			return <Result.Component key={key} library={result}/>;
 		});

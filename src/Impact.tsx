@@ -7,18 +7,17 @@ import React = require('react');
 import { Route, DefaultRoute, HistoryLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
 
-// Local Modules
+
+// Local Modules: TODO...use exports to avoid the extra level of structure
+import { Store } from './Store';
 import Application = require("./Application");
-import Index = require("./Index");
-import Result = require("./Result");
 import Search = require("./Search");
-import State = require("./State");
 
 // This is the entry point for the whole application.  We are passed an element
 // on which to attach the application.
 export function Mount(node: Element) {
 	// Create a store
-	var store = new State.Store();
+	var store = new Store();
 
 	// TODO: Formulate this as an event, not a method (if it makes sense)
 	store.load();
@@ -29,7 +28,7 @@ export function Mount(node: Element) {
 	// use this "wrapped" component with the router.
 	var SearchContent = React.createClass({
 		render() {
-			return <Search.Component index={store.getIndex()} term={store.term}/>;
+			return <Search.Component index={store.index} term={store.term}/>;
 		}
 	});
 

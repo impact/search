@@ -1,6 +1,7 @@
-import Index = require("./Index");
 import React = require("react");
 import semver = require('semver');
+
+import { Library } from './Index';
 
 function SortVersion(a: string, b: string) {
 	if (semver.gt(a, b)) return -1;
@@ -8,7 +9,7 @@ function SortVersion(a: string, b: string) {
 	return 0;
 }
 
-export class Component extends React.Component<{key: string, library: Index.Library}, {}> {
+export class Component extends React.Component<{key: string, library: Library}, {}> {
 	constructor() {
 		super();
 		this.state = {};

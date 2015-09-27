@@ -7,11 +7,13 @@
 		"jsx": "react"
 	},
 	"files": [
+		"Application.tsx",
 		"Impact.tsx",
-		"Result.tsx",
 		"Index.ts",
+		"Result.tsx",
 		"Search.tsx",
 		"State.ts",
+		"Store.ts",
 		"../typings/react/react-global.d.ts",
 		"../typings/react-router/react-router.d.ts",
 		"../typings/jquery/jquery.d.ts",
