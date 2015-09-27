@@ -26,10 +26,17 @@ export class SubState<S> implements Observable<S>, Mutable<S> {
 	}
 }
 
-export class Store {
+interface ReadStore {
+	getIndex(): Observable<Index.ImpactIndex>;
+}
+
+export class Store implements ReadStore {
 	private index: SubState<Index.ImpactIndex>;
 
-	constructor() {
+	constructor(public source?: string) {
+		if (!source) {
+			this.source = "/impact_index.json";
+		}
 		this.index = new SubState(null);
 	}
 
@@ -38,8 +45,7 @@ export class Store {
 	}
 
 	load() {
-		var source = "http://impact.github.io/impact_index.json";
-		$.get(source, (result) => {
+		$.get(this.source, (result) => {
 			this.index.update(result);
 		})
 	}

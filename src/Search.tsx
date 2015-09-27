@@ -40,34 +40,30 @@ class SearchProps {
 }
 
 class SearchState {
-	constructor(public term: string) { }
+	constructor(public term: string, public index: Index.ImpactIndex) { }
 }
 
 export class Component extends React.Component<SearchProps, SearchState> {
 	constructor() {
 	  	super();
-		this.state = new SearchState("");
+		this.state = new SearchState("", null);
 	}
 
 	componentDidMount() {
-		console.log("When mounted, props = ", this.props);
 		this.props.index.subscribe((v) => {
-			console.log("Notified of change in index to ", v);
-			this.forceUpdate();
+			this.setState(new SearchState(this.state.term, v));
 		})
 	}
 
 	handleChange(event: JQueryEventObject) {
 		var term: string = (event.target as any).value;
-		this.setState(new SearchState(term))
+		this.setState(new SearchState(term, this.state.index));
 	}
 
 	render() {
-		console.log("Rendering Search");
 		var term = this.state.term;
-		var index = this.props.index.get();
+		var index = this.state.index;
 
-		console.log("index value = ", index);
 		var results = computeResults(this.state.term, index);
 
 		var relems: JSX.Element[] = results.map((result: Index.Library) => {
@@ -104,7 +100,7 @@ export class Component extends React.Component<SearchProps, SearchState> {
 			</div> : null}
 		</div>
 
-		if (this.props.index==null) {
+		if (this.state.index==null) {
 			content = <div className="log-lg-6 col-lg-offset-3 centered">Loading...</div>
 		}
 

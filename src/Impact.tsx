@@ -17,12 +17,7 @@ function SortLibrary(a: Index.Library, b: Index.Library) {
 	return b.stars - a.stars;
 }
 
-class RootState {
-	// TODO: Make this a function that returns the index
-	constructor() { }
-}
-
-export class Application extends React.Component<{}, RootState> {
+export class Application extends React.Component<{}, {}> {
 	static Mount(node: Element) {
 		var store = new State.Store();
 		store.load();
@@ -48,7 +43,6 @@ export class Application extends React.Component<{}, RootState> {
 
 	constructor() {
 	  	super();
-		this.state = new RootState();
 	}
 
 	render() {
