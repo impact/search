@@ -4,7 +4,7 @@
 import React = require('react');
 
 // Some elements and functions from react-router
-import { Route, DefaultRoute, HistoryLocation } from 'react-router';
+import { Link, Route, DefaultRoute, HistoryLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
 
 
@@ -12,6 +12,7 @@ import { run as runRouter } from 'react-router';
 import { Store } from './Store';
 import Application = require("./Application");
 import Search = require("./Search");
+import Listing = require("./Listing");
 
 // This is the entry point for the whole application.  We are passed an element
 // on which to attach the application.
@@ -27,15 +28,27 @@ export function Mount(node: Element) {
 	// use this "wrapped" component with the router.
 	var SearchContent = React.createClass({
 		render() {
-			return <Search.Component index={store.index}
-					   term={store.term} updateTerm={(s) => store.updateTerm(s)}/>;
+			return <div>
+				<Search.Component index={store.index}
+					term={store.term} updateTerm={(s) => store.updateTerm(s)}/>
+			    <div className="centered">
+					<Link to="all">All Libraries</Link>
+				</div>
+			</div>
+		}
+	});
+
+	var ListingHandler = React.createClass({
+		render() {
+			return <Listing.Component index={store.index}/>;
 		}
 	});
 
 	// Build our routes
 	var routes =
 	<Route handler={Application.Component} path="/" name="root">
-	<DefaultRoute handler={SearchContent}/>
+	  <Route handler={ListingHandler} path="all" name="all"/>
+	  <DefaultRoute handler={SearchContent}/>
 	</Route>
 
 	// Associate these routes with the application node
