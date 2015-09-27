@@ -19,7 +19,6 @@ export function Mount(node: Element) {
 	// Create a store
 	var store = new Store();
 
-	// TODO: Formulate this as an event, not a method (if it makes sense)
 	store.load();
 
 	// This component wrapper is necessary because of the way the router works.  When
@@ -28,7 +27,8 @@ export function Mount(node: Element) {
 	// use this "wrapped" component with the router.
 	var SearchContent = React.createClass({
 		render() {
-			return <Search.Component index={store.index} term={store.term}/>;
+			return <Search.Component index={store.index}
+					   term={store.term} updateTerm={(s) => store.updateTerm(s)}/>;
 		}
 	});
 

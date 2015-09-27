@@ -9,7 +9,6 @@ import { Observable } from './State';
 // This function takes a given search term (as a string) and an index structure
 // and returns a list of libraries that match the search term.
 function computeResults(term: string, index: ImpactIndex): Library[] {
-	// TODO: Compute results
 	var results: Library[] = [];
 	var sf = (a: Library, b: Library) => b.stars - a.stars;
 
@@ -44,6 +43,7 @@ function computeResults(term: string, index: ImpactIndex): Library[] {
 class SearchProps {
 	public index: Observable<ImpactIndex>;
 	public term: Observable<string>;
+	public updateTerm: (s: string) => void;
 }
 
 // This mirrors the contents of "SearchProps" to show the actual states.
@@ -70,10 +70,9 @@ export class Component extends React.Component<SearchProps, SearchState> {
 		this.props.term.link(this, "term");
 	}
 
-	// TODO: Use an action here...
 	handleChange(event: JQueryEventObject) {
 		var term: string = (event.target as any).value;
-		this.setState(new SearchState(term, this.state.index));
+		this.props.updateTerm(term);
 	}
 
 	// Render our component

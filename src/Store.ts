@@ -18,6 +18,10 @@ export class Store {
 		this.term = new SubState("");
 	}
 
+	updateTerm(s: string) {
+		this.term.update(s);
+	}
+
 	load() {
 		$.get(this.source, (result) => {
 			this.index.update(result);
