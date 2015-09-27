@@ -6,6 +6,13 @@ import Result = require("./Result");
 import { ImpactIndex, Library } from './Index';
 import { Observable } from './State';
 
+function match(t: string, lib: Library): boolean {
+	var inname = lib.name.toLowerCase().indexOf(t)>-1;
+	var indesc = lib.description.toLowerCase().indexOf(t)>-1;
+
+	return inname || indesc;
+}
+
 // This function takes a given search term (as a string) and an index structure
 // and returns a list of libraries that match the search term.
 function computeResults(term: string, index: ImpactIndex): Library[] {
@@ -21,14 +28,16 @@ function computeResults(term: string, index: ImpactIndex): Library[] {
 	}
 
 	// If we have an index and a term, compute results
-	// TODO: Tokenize and trim and then do an "and" across terms
-	var t = term.toLowerCase();
+	var terms = term.toLowerCase().trim().split(/[ ]+/)
 
 	index.libraries.forEach((lib: Library) => {
-		var inname = lib.name.toLowerCase().indexOf(t)>-1;
-		var indesc = lib.description.toLowerCase().indexOf(t)>-1;
-
-		if (inname || indesc) {
+		var matches = true;
+		terms.forEach((t: string) => {
+			if (!match(t, lib)) {
+				matches = false;
+			}
+		})
+		if (matches) {
 			results.push(lib);
 		}
 	});
@@ -64,8 +73,8 @@ export class Component extends React.Component<SearchProps, SearchState> {
 	}
 
 	componentDidMount() {
-		// Ask the store to automatically update our states when changes
-		// occur.
+		// Ask the store to automatically update our states when
+		// changes occur.
 		this.props.index.safelink(this, (v): SearchState => { return { index: v }})
 		this.props.term.safelink(this, (v): SearchState => { return { term: v }})
 	}
@@ -121,3 +130,5 @@ export class Component extends React.Component<SearchProps, SearchState> {
 		return content
 	}
 }
+
+//export var Foo: React.ComponentClass<SearchProps> = Component;
