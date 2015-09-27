@@ -49,22 +49,22 @@ function computeResults(term: string, index: ImpactIndex): Library[] {
 // Search properties - This are simply objects that allow us to register
 // our interest in specific substates and keep them automatically syncronized
 // with this components state (see calls to 'register' below)
-class SearchProps {
+class Props {
 	public index: Observable<ImpactIndex>;
 	public term: Observable<string>;
 	public updateTerm: (s: string) => void;
 }
 
-// This mirrors the contents of "SearchProps" to show the actual states.
+// This mirrors the contents of "Props" to show the actual states.
 // This cannot have methods because React will strip them on its internal
 // representation.
-interface SearchState {
+interface State {
 	term?: string;
 	index?: ImpactIndex;
 }
 
 // A search component
-export class Component extends React.Component<SearchProps, SearchState> {
+export class Component extends React.Component<Props, State> {
 	constructor() {
 	  	super();
 		// Not really necessary since this will be updated as soon as we
@@ -75,8 +75,8 @@ export class Component extends React.Component<SearchProps, SearchState> {
 	componentDidMount() {
 		// Ask the store to automatically update our states when
 		// changes occur.
-		this.props.index.safelink(this, (v): SearchState => { return { index: v }})
-		this.props.term.safelink(this, (v): SearchState => { return { term: v }})
+		this.props.index.safelink(this, (v): State => { return { index: v }})
+		this.props.term.safelink(this, (v): State => { return { term: v }})
 	}
 
 	handleChange(event: JQueryEventObject) {
@@ -131,4 +131,4 @@ export class Component extends React.Component<SearchProps, SearchState> {
 	}
 }
 
-//export var Foo: React.ComponentClass<SearchProps> = Component;
+//export var Foo: React.ComponentClass<Props> = Component;

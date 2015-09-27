@@ -1,7 +1,6 @@
 import React = require("react");
 import semver = require('semver');
 
-import { Link } from 'react-router';
 import { Library } from './Index';
 
 function SortVersion(a: string, b: string) {
@@ -11,8 +10,7 @@ function SortVersion(a: string, b: string) {
 }
 
 class Props {
-	public key: string;
-	public library: Library;
+	  public library: Library;
 }
 
 export class Component extends React.Component<Props, {}> {
@@ -39,7 +37,7 @@ export class Component extends React.Component<Props, {}> {
 		if (homepage!="") {
 			header =
 			<h4 className="list-group-item-heading">
-				<a href={homepage}>{name}</a> <Link to="lib" params={{uri: "uri", name: "name"}}>Lib</Link>
+				<a href={homepage}>{name}</a>
 			</h4>;
 		}
 
@@ -53,17 +51,19 @@ export class Component extends React.Component<Props, {}> {
 			Stars: {stars}
 		</span>
 
-		return <div className="list-group-item">
-			<p className="pullright">
-				{rating2}
-			</p>
-			{header}
-			<p className="list-group-item-text">
-				{this.props.library.description}
-			</p>
-			<p className="centered">
-				{versions}
-			</p>
+		return <div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
+			<div className="list-group-item">
+				<p className="pullright">
+					{rating2}
+				</p>
+				{header}
+				<p className="list-group-item-text">
+					{this.props.library.description}
+				</p>
+				<p className="centered">
+					{versions}
+				</p>
+			</div>
 		</div>;
 	}
 }
