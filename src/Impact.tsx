@@ -1,11 +1,11 @@
 /// <reference path="../typings/node/node.d.ts"/>
 
-// NPM Modules
-import $ = require('jquery');
+// React
 import React = require('react');
-import ReactRouter = require('react-router');
 
-var csk = require('redux');
+// Some elements and functions from react-router
+import { Route, DefaultRoute, HistoryLocation } from 'react-router';
+import { run as runRouter } from 'react-router';
 
 // Local Modules
 import Application = require("./Application");
@@ -14,25 +14,33 @@ import Result = require("./Result");
 import Search = require("./Search");
 import State = require("./State");
 
+// This is the entry point for the whole application.  We are passed an element
+// on which to attach the application.
 export function Mount(node: Element) {
+	// Create a store
 	var store = new State.Store();
+
+	// TODO: Formulate this as an event, not a method (if it makes sense)
 	store.load();
 
-	var Route = ReactRouter.Route;
-
+	// This component wrapper is necessary because of the way the router works.  When
+	// implementing handlers, it isn't possible to specify props.  So we have to create
+	// a new "factory" here that builds the component locally with props.  When can then
+	// use this "wrapped" component with the router.
 	var SearchContent = React.createClass({
 		render() {
-			console.log("Factory has index as: ", store.getIndex());
 			return <Search.Component index={store.getIndex()} term={store.term}/>;
 		}
 	});
 
+	// Build our routes
 	var routes =
 	<Route handler={Application.Component} path="/" name="root">
-	<ReactRouter.DefaultRoute handler={SearchContent}/>
+	<DefaultRoute handler={SearchContent}/>
 	</Route>
 
-	ReactRouter.run(routes, ReactRouter.HistoryLocation, function (Handler) {
+	// Associate these routes with the application node
+	runRouter(routes, HistoryLocation, function (Handler) {
 		React.render(<Handler/>, node);
 	});
 }
