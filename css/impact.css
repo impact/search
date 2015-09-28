@@ -10,6 +10,10 @@
 	margin-top: 20px;
 }
 
+.padded {
+	margin: 10px;
+}
+
 .pullright {
 	float: right;
 }
@@ -23,6 +27,15 @@
 	display: inline-block;
 }
 
+#logo {
+	width: 400px;
+}
+
+#logo.small {
+	width: 200px;
+}
+
 @media only screen and (max-device-width: 480px) {
 	#logo { width: 200px; }
+	#logo.small { width: 100px; }
 }

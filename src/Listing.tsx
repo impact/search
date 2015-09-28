@@ -7,6 +7,7 @@ import Result = require('./Result');
 
 class Props {
 	public index: Observable<ImpactIndex>;
+	public wide: boolean;
 }
 
 interface State {
@@ -42,16 +43,18 @@ class Component extends React.Component<Props, State> {
 			return <Result key={key} library={result}/>;
 		});
 
-		// The complete HTML for this component
-		var content =
-		<div className="row">
-		{results.length>0 ? 
-			<div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
-				{relems}
-			</div> : null}
-		</div>
+		var classes = (this.props.wide ?
+					   "list-group padded" :
+					   "list-group col-lg-6 col-lg-offset-3 col-md-12")
 
-		return content
+		return (
+			<div className="row">
+				{results.length>0 ? 
+				 <div className={classes}>
+				 {relems}
+				 </div> : null}
+			</div>
+		);
 	}
 }
 

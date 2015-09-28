@@ -23,6 +23,7 @@ class Component extends React.Component<Props, {}> {
 
 	render() {
 		var lib = this.props.library;
+		var uri = lib.uri;
 		var name = lib.name;
 		var homepage = lib.homepage;
 		var stars = lib.stars;
@@ -39,7 +40,7 @@ class Component extends React.Component<Props, {}> {
 		if (homepage!="") {
 			header =
 			<h4 className="list-group-item-heading">
-				<a href={homepage}>{name}</a> <Link to="lib" params={{uri: "uri", name: "name"}}>Lib</Link>
+				<a href={homepage}>{name}</a> <Link to="lib" params={{uri: uri, name: name}}>Lib</Link>
 			</h4>;
 		}
 

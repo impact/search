@@ -12,6 +12,7 @@
 		"Impact.tsx",
 		"Index.ts",
 		"Listing.tsx",
+		"Logo.tsx",
 		"Result.tsx",
 		"Search.tsx",
 		"State.ts",
