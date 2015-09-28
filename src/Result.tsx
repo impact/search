@@ -30,12 +30,6 @@ class Component extends React.Component<Props, {}> {
 
 		var vkeys = Object.keys(lib.versions).sort(SortVersion);
 
-		var versions: JSX.Element[] = vkeys.map((k): JSX.Element => {
-			var vdata = lib.versions[k];
-			var zip = vdata.zipball_url;
-			return <div key={k} className="label label-success vspan breaker">{k}</div>
-		});
-
 		var header = <h4 className="list-group-item-heading">{name}</h4>;
 		if (homepage!="") {
 			header =
@@ -61,9 +55,6 @@ class Component extends React.Component<Props, {}> {
 			{header}
 			<p className="list-group-item-text">
 				{this.props.library.description}
-			</p>
-			<p className="centered">
-				{versions}
 			</p>
 		</div>;
 	}
