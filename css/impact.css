@@ -61,6 +61,12 @@
 	padding-top: 10px;
 }
 
+#version {
+	position: fixed;
+	bottom: 0px;
+	right: 10px;
+}
+
 @media only screen and (max-device-width: 480px) {
 	#logo { width: 200px; }
 	#logo.small { width: 100px; }

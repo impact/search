@@ -1,6 +1,8 @@
 // NPM Modules
 import React = require('react');
 
+import version = require('./version');
+
 import { RouteHandler } from 'react-router';
 
 class Component extends React.Component<{}, {}> {
@@ -12,6 +14,9 @@ class Component extends React.Component<{}, {}> {
 		return (
 			<div id="appdiv" className="container-fluid">
 				<RouteHandler/>
+				<div id="version">
+					Impact Search: {version}
+				</div>
 			</div>
 		);
 	}

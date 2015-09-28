@@ -1,6 +1,7 @@
 STATIC_DIR = ../impact.github.io
 
 local:
+	echo "export = '`git describe --tags`'" > src/version.ts	
 	(cd src; tsc)
 	webpack
 
