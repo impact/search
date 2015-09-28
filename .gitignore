@@ -4,3 +4,4 @@ node_modules
 js
 dist
 impact_index.json
+src/version.ts
