@@ -61,10 +61,16 @@
 	padding-top: 10px;
 }
 
+/*
 #version {
 	position: fixed;
 	bottom: 0px;
 	right: 10px;
+}
+*/
+
+#version {
+	font-size: 50%;
 }
 
 @media only screen and (max-device-width: 480px) {
