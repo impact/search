@@ -20,8 +20,5 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.5",
-    "react": "~0.13.3",
-    "react-router": "~0.13.3",
-    "semver": "~4.3.4"
   }
 }
