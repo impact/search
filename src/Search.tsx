@@ -50,7 +50,7 @@ function computeResults(term: string, index: ImpactIndex): Library[] {
 // our interest in specific substates and keep them automatically syncronized
 // with this components state (see calls to 'register' below)
 class Props {
-	public index: Observable<ImpactIndex>;
+	public index: ImpactIndex;
 	public term: Observable<string>;
 	public updateTerm: (s: string) => void;
 }
@@ -75,7 +75,6 @@ class Component extends React.Component<Props, State> {
 	componentDidMount() {
 		// Ask the store to automatically update our states when
 		// changes occur.
-		this.props.index.safelink(this, (v): State => { return { index: v }})
 		this.props.term.safelink(this, (v): State => { return { term: v }})
 	}
 

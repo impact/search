@@ -6,27 +6,19 @@ import { ImpactIndex, Library, libhash } from './Index';
 import Result = require('./Result');
 
 class Props {
-	public index: Observable<ImpactIndex>;
+	public index: ImpactIndex;
 	public wide: boolean;
 }
 
-interface State {
-	index?: ImpactIndex;
-}
-
-class Component extends React.Component<Props, State> {
+class Component extends React.Component<Props, {}> {
 	constructor() {
 		super();
 		this.state = {};
 	}
 
-	componentDidMount() {
-		this.props.index.safelink(this, (v): State => { return { index: v }})
-	}
-
 	// Render our component
 	render() {
-		var index = this.state.index;
+		var index = this.props.index;
 
 		// If we don't have an index yet, just return this
 		if (index==null) {
