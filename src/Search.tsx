@@ -3,7 +3,7 @@ import React = require('react');
 // TODO: use exports inside this
 import Result = require("./Result");
 
-import { ImpactIndex, Library } from './Index';
+import { ImpactIndex, Library, libhash } from './Index';
 import { Observable } from './State';
 
 function match(t: string, lib: Library): boolean {
@@ -99,7 +99,7 @@ class Component extends React.Component<Props, State> {
 
 		// Generate Result components for these results.
 		var relems: JSX.Element[] = results.map((result: Library) => {
-			var key: string = result.uri+" "+result.name;
+			var key = libhash(result);
 			return <Result key={key} library={result}/>;
 		});
 

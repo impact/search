@@ -6,7 +6,7 @@ import React = require('react');
 // Some elements and functions from react-router
 import { Link, Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
-import { Library, ImpactIndex } from './Index';
+import { Library, ImpactIndex, libhash, findLibrary } from './Index';
 
 // Local Modules
 import Store = require('./Store');
@@ -16,19 +16,8 @@ import Listing = require("./Listing");
 import Detailed = require("./Detailed");
 import Logo = require("./Logo");
 
-function findLibrary(index: ImpactIndex, uri: string, name: string): Library {
-	var found: Library = null;
-	index.libraries.forEach((lib: Library) => {
-		if (lib.uri==uri && lib.name==name) {
-			found = lib;
-		}
-	});
-	return found;
-}
-
-export class RouteParams {
-	uri: string;
-	name: string;
+interface RouteParams {
+	hash: string;
 }
 
 // This is the entry point for the whole application.  We are passed an element
@@ -80,14 +69,12 @@ export function Mount(node: Element) {
 		},
 
 		render() {
+			var params = this.context.router.getCurrentParams() as RouteParams;
 			var index = store.index.get();
 			if (!index) return <span className="centered">Loading...</span>;
 
-			var uri = this.context.router.getCurrentParams().uri;
-			var name = this.context.router.getCurrentParams().name;
-			console.log("uri = ", uri);
-			console.log("name = ", name);
-			var library = findLibrary(index, uri, name);
+			var hash = params.hash;
+			var library = findLibrary(index, hash);
 			return <Detailed library={library}/>;
 		}
 	});
@@ -97,7 +84,7 @@ export function Mount(node: Element) {
 	<Route handler={Application} path="/" name="root">
 		<Route handler={ListingHandler} path="all" name="all"/>
 		<Route handler={EmbeddedHandler} path="embedded" name="embedded"/>
-		<Route handler={DetailedHandler} path="library/:uri/:name" name="lib"/>
+		<Route handler={DetailedHandler} path="library/:hash" name="lib"/>
 		<DefaultRoute handler={SearchContent}/>
 	</Route>;
 

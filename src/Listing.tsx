@@ -1,7 +1,7 @@
 import React = require('react');
 
 import { Observable } from './State';
-import { ImpactIndex, Library } from './Index';
+import { ImpactIndex, Library, libhash } from './Index';
 
 import Result = require('./Result');
 
@@ -39,7 +39,7 @@ class Component extends React.Component<Props, State> {
 
 		// Generate Result components for these results.
 		var relems: JSX.Element[] = results.map((result: Library) => {
-			var key: string = result.uri+" "+result.name;
+			var key = libhash(result)
 			return <Result key={key} library={result}/>;
 		});
 
