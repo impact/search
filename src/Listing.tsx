@@ -37,9 +37,7 @@ class Component extends React.Component<Props, {}> {
 			return <Result key={key} library={result}/>;
 		});
 
-		var classes = (this.props.wide ?
-					   "list-group padded" :
-					   "list-group {layout}")
+		var classes = (this.props.wide ? "list-group padded" : fullscreen("list-group"))
 
 		return (
 			<div className="row">

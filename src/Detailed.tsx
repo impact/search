@@ -52,7 +52,7 @@ class Component extends React.Component<Props, {}> {
 
 		return (
 			<div id="details">
-				<div id="iheader" className={fullscreen()}>
+				<div id="iheader" className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<a id="orglink" href="/#">
 						<img id="logo" className="nav" src="img/logo_glossy.svg"/>
 					</a>
