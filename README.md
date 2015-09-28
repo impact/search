@@ -1,8 +1,11 @@
 # Impact Search
 
-This is a simple web application build using
+This is a simple web application built using
 [React](http://reactjs.com) and
-[TypeScript](http://www.typescriptlang.org/).
+[TypeScript](http://www.typescriptlang.org/).  It uses an index file
+build using the [impact](http://github.com/impact/impact) package
+manager to create an interactive single page web application for
+exploring available Modelica libraries.
 
 In order to build this web application, you'll need a few things.
 First, you need Node.js and `npm` installed.  You'll also need the
