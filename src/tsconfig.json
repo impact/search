@@ -8,8 +8,10 @@
 	},
 	"files": [
 		"Application.tsx",
+		"Detailed.tsx",
 		"Impact.tsx",
 		"Index.ts",
+		"Listing.tsx",
 		"Result.tsx",
 		"Search.tsx",
 		"State.ts",
