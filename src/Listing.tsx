@@ -13,7 +13,7 @@ interface State {
 	index?: ImpactIndex;
 }
 
-export class Component extends React.Component<Props, State> {
+class Component extends React.Component<Props, State> {
 	constructor() {
 		super();
 		this.state = {};
@@ -39,7 +39,7 @@ export class Component extends React.Component<Props, State> {
 		// Generate Result components for these results.
 		var relems: JSX.Element[] = results.map((result: Library) => {
 			var key: string = result.uri+" "+result.name;
-			return <Result.Component key={key} library={result}/>;
+			return <Result key={key} library={result}/>;
 		});
 
 		// The complete HTML for this component
@@ -54,3 +54,5 @@ export class Component extends React.Component<Props, State> {
 		return content
 	}
 }
+
+export = Component;

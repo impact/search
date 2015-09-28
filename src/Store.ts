@@ -6,7 +6,7 @@ import { SubState, Observable } from './State';
 // SubState which provides an interface which is essentially read only
 // and can be passed as a property to a Component (which then links
 // that to an internal state).
-export class Store {
+class Store {
 	public index: SubState<ImpactIndex>;
 	public term: SubState<string>;
 
@@ -28,3 +28,5 @@ export class Store {
 		})
 	}
 }
+
+export = Store;

@@ -8,8 +8,8 @@ import { Link, Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-
 import { run as runRouter } from 'react-router';
 
 
-// Local Modules: TODO...use exports to avoid the extra level of structure
-import { Store } from './Store';
+// Local Modules
+import Store = require('./Store');
 import Application = require("./Application");
 import Search = require("./Search");
 import Listing = require("./Listing");
@@ -31,7 +31,7 @@ export function Mount(node: Element) {
 	var SearchContent = React.createClass({
 		render() {
 			return <div>
-				<Search.Component index={store.index}
+				<Search index={store.index}
 					term={store.term} updateTerm={(s) => store.updateTerm(s)}/>
 			    <div className="centered">
 					<Link to="all">All Libraries</Link>
@@ -44,19 +44,19 @@ export function Mount(node: Element) {
 	// to the component via properties.
 	var ListingHandler = React.createClass({
 		render() {
-			return <Listing.Component index={store.index}/>;
+			return <Listing index={store.index}/>;
 		}
 	});
 
 	var DetailedHandler = React.createClass({
 		render() {
-			return <Detailed.Component library={null}/>;
+			return <Detailed library={null}/>;
 		}
 	});
 
 	// Build our routes
 	var routes =
-	<Route handler={Application.Component} path="/" name="root">
+	<Route handler={Application} path="/" name="root">
 	<Route handler={ListingHandler} path="all" name="all"/>
 	<Route handler={DetailedHandler} path="library/:uri/:name" name="lib"/>
 	  <DefaultRoute handler={SearchContent}/>
@@ -67,4 +67,3 @@ export function Mount(node: Element) {
 		React.render(<Handler/>, node);
 	});
 }
-

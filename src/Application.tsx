@@ -3,7 +3,7 @@ import React = require('react');
 
 import { RouteHandler } from 'react-router';
 
-export class Component extends React.Component<{}, {}> {
+class Component extends React.Component<{}, {}> {
 	constructor() {
 	  	super();
 	}
@@ -29,3 +29,5 @@ export class Component extends React.Component<{}, {}> {
 		);
 	}
 }
+
+export = Component;

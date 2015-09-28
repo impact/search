@@ -15,7 +15,7 @@ class Props {
 	public library: Library;
 }
 
-export class Component extends React.Component<Props, {}> {
+class Component extends React.Component<Props, {}> {
 	constructor() {
 		super();
 		this.state = {};
@@ -67,3 +67,5 @@ export class Component extends React.Component<Props, {}> {
 		</div>;
 	}
 }
+
+export = Component;
