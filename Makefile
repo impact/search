@@ -1,8 +1,10 @@
 STATIC_DIR = ../impact.github.io
 
-publish:
+local:
 	(cd src; tsc)
 	webpack
+
+publish: local
 	cp index.html $(STATIC_DIR)
 	cp dist/bundle.js $(STATIC_DIR)/dist
 	cp -r css $(STATIC_DIR)

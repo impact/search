@@ -33,33 +33,29 @@ class Component extends React.Component<Props, {}> {
 			return <div key={k} className="label label-success vspan breaker">{k}</div>
 		});
 
-		var header = <h4 className="list-group-item-heading">{name}</h4>;
+		var header = <h4>{name}</h4>;
 		if (homepage!="") {
 			header =
-			<h4 className="list-group-item-heading">
+			<h3>
 				<a href={homepage}>{name}</a>
-			</h4>;
+			</h3>;
 		}
 
 		var rating = 
-		<button type="button" className="btn btn-default btn-lg" disabled={true}>
-			Stars: {stars}
-		</button>
+		<h5 className="pullright">
+			Rating: {stars} &nbsp;
+			<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+		</h5>;
 
-		var rating2 = 
-		<span>
-			Stars: {stars}
-		</span>
-
-		return <div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
-			<div className="list-group-item">
-				<p className="pullright">
-					{rating2}
-				</p>
+		return <div className="col-lg-6 col-lg-offset-3 rgroup col-md-12">
+			<div>
+				{rating}
 				{header}
-				<p className="list-group-item-text">
+				<h4>Description</h4>
+				<p>
 					{this.props.library.description}
 				</p>
+				<h4>Versions</h4>
 				<p className="centered">
 					{versions}
 				</p>

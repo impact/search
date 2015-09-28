@@ -34,23 +34,18 @@ class Component extends React.Component<Props, {}> {
 		if (homepage!="") {
 			header =
 			<h4 className="list-group-item-heading">
-				<a href={homepage}>{name}</a> <Link to="lib" params={{hash: hash}}>Lib</Link>
+				<Link to="lib" params={{hash: hash}}>{name}</Link>
 			</h4>;
 		}
 
 		var rating = 
-		<button type="button" className="btn btn-default btn-lg" disabled={true}>
-			Stars: {stars}
-		</button>
-
-		var rating2 = 
 		<span>
-			Stars: {stars}
+			{stars} <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
 		</span>
 
 		return <div className="list-group-item">
 			<p className="pullright">
-				{rating2}
+				{rating}
 			</p>
 			{header}
 			<p className="list-group-item-text">
