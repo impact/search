@@ -3,9 +3,9 @@ require('es6-promise').polyfill();
 var path = require('path');
 
 module.exports = {
-    entry: "./src/entry.ts",
+    entry: "../src/entry.ts",
     output: {
-	path: path.join(__dirname, './dist'),
+	path: path.join(__dirname, '../dist'),
         filename: "./bundle.js"
     },
     module: {

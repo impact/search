@@ -1,5 +1,3 @@
-/// <reference path="../typings/node/node.d.ts"/>
-
 // React
 import React = require('react');
 import Addons = require('react/addons');

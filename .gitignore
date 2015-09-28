@@ -5,3 +5,5 @@ js
 dist
 impact_index.json
 src/version.ts
+entry.js
+lib
