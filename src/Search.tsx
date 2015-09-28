@@ -116,8 +116,8 @@ class Component extends React.Component<Props, State> {
 
 		// The complete HTML for this component
 		var content =
-		<div className="row">
-			<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-12 centered">
+		<div id="search" className="row">
+			<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 centered">
 				{searchbox}
 			</div>
 			{results.length>0 ? 
