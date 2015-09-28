@@ -86,7 +86,7 @@ class Component extends React.Component<Props, State> {
 	// Render our component
 	render() {
 		var term = this.state.term;
-		var index = this.state.index;
+		var index = this.props.index;
 
 		// If we don't have an index yet, just return this
 		if (index==null) {

@@ -33,12 +33,13 @@ class Component extends React.Component<Props, {}> {
 			return <div key={k} className="label label-success vspan breaker">{k}</div>
 		});
 
-		var header = <h4>{name}</h4>;
+		var header = <h2>{name}</h2>;
+		var site: JSX.Element = null;
 		if (homepage!="") {
-			header =
-			<h3>
-				<a href={homepage}>{name}</a>
-			</h3>;
+			site =
+			<h4>
+				Homepage: <a href={homepage}>{homepage}</a>
+			</h4>;
 		}
 
 		var rating = 
@@ -47,20 +48,29 @@ class Component extends React.Component<Props, {}> {
 			<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
 		</h5>;
 
-		return <div className="col-lg-6 col-lg-offset-3 rgroup col-md-12">
-			<div>
-				{rating}
-				{header}
-				<h4>Description</h4>
-				<p>
-					{this.props.library.description}
-				</p>
-				<h4>Versions</h4>
-				<p className="centered">
-					{versions}
-				</p>
-			</div>
-		</div>;
+		return (
+			<div id="details">
+				<div id="iheader" className="col-lg-12 col-md-12">
+					<a id="orglink" href="/#">
+						<img id="logo" className="nav" src="img/logo_glossy.svg"/>
+					</a>
+				</div>
+				<div className="col-lg-6 col-lg-offset-3 rgroup col-md-12">
+					<div>
+						{rating}
+						{header}
+						{site}
+						<h4>Description</h4>
+						<p>
+							{this.props.library.description}
+						</p>
+						<h4>Versions</h4>
+						<p className="centered">
+							{versions}
+						</p>
+					</div>
+				</div>
+			</div>);
 	}
 }
 

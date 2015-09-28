@@ -23,7 +23,7 @@ class Store {
 	}
 
 	load() {
-		$.get(this.source, (result) => {
+		return $.get(this.source, (result) => {
 			this.index.update(result);
 		})
 	}

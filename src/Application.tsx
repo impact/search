@@ -10,7 +10,7 @@ class Component extends React.Component<{}, {}> {
 
 	render() {
 		return (
-			<div className="container-fluid">
+			<div id="appdiv" className="container-fluid">
 				<RouteHandler/>
 			</div>
 		);
