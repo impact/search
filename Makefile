@@ -4,6 +4,10 @@ local:
 	echo "export = '`git describe --tags`'" > src/lib/version.ts
 	webpack
 
+watch:
+	echo "export = '`git describe --tags`'" > src/lib/version.ts
+	webpack-dev-server --watch
+
 publish: local
 	cp index.html $(STATIC_DIR)
 	cp dist/bundle.js $(STATIC_DIR)/dist
