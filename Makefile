@@ -12,3 +12,9 @@ publish: local
 	cp -r img $(STATIC_DIR)
 	cp -r bower_components/jquery $(STATIC_DIR)/bower_components
 	cp -r bower_components/bootstrap $(STATIC_DIR)/bower_components
+
+clean:
+	-rm dist/*
+	-rm -rf build/*
+	-rm src/entry.js*
+	-rm src/lib/*.js*
