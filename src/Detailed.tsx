@@ -50,12 +50,12 @@ class Component extends React.Component<Props, {}> {
 
 		return (
 			<div id="details">
-				<div id="iheader" className="col-lg-12 col-md-12">
+				<div id="iheader" className="col-lg-12 col-md-10 col-md-offset-1">
 					<a id="orglink" href="/#">
 						<img id="logo" className="nav" src="img/logo_glossy.svg"/>
 					</a>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 rgroup col-md-12">
+				<div className="col-lg-6 col-lg-offset-3 rgroup col-md-10 col-md-offset-1">
 					<div>
 						{rating}
 						{header}
