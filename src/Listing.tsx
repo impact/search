@@ -3,6 +3,8 @@ import React = require('react');
 import { Observable } from './State';
 import { ImpactIndex, Library, libhash } from './Index';
 
+import { fullscreen } from "./Impact";
+
 import Result = require('./Result');
 
 class Props {
@@ -22,7 +24,7 @@ class Component extends React.Component<Props, {}> {
 
 		// If we don't have an index yet, just return this
 		if (index==null) {
-			return <div className="col-lg-12 centered">Loading...</div>
+			return <div className={fullscreen("centered")}>Loading...</div>
 		}
 
 		// Sort libraries
@@ -37,7 +39,7 @@ class Component extends React.Component<Props, {}> {
 
 		var classes = (this.props.wide ?
 					   "list-group padded" :
-					   "list-group col-lg-6 col-lg-offset-3 col-md-12")
+					   "list-group {layout}")
 
 		return (
 			<div className="row">

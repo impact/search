@@ -2,6 +2,7 @@
 
 // React
 import React = require('react');
+import Addons = require('react/addons');
 
 // Some elements and functions from react-router
 import { Link, Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router';
@@ -18,6 +19,26 @@ import Logo = require("./Logo");
 
 interface RouteParams {
 	hash: string;
+}
+
+export function fullscreen(...names: string[]): string {
+	var present: { [key: string]: boolean } = {};
+	function spec(size: string, off: number) {
+		var wid = 12-(2*off);
+		present["col-"+size+"-"+wid] = true;
+		present["col-"+size+"-offset-"+off] = true;
+	}
+
+	spec("lg", 4)
+	spec("md", 2)
+	spec("sm", 1)
+	spec("xs", 1)
+
+	names.forEach((k: string) => {
+		present[k] = true;
+	})
+
+	return Addons.addons.classSet(present);
 }
 
 // This is the entry point for the whole application.  We are passed an element

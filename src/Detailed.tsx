@@ -3,6 +3,8 @@ import semver = require('semver');
 
 import { Library } from './Index';
 
+import { fullscreen } from './Impact';
+
 function SortVersion(a: string, b: string) {
 	if (semver.gt(a, b)) return -1;
 	if (semver.lt(a, b)) return 1;
@@ -50,12 +52,12 @@ class Component extends React.Component<Props, {}> {
 
 		return (
 			<div id="details">
-				<div id="iheader" className="col-lg-12 col-md-10 col-md-offset-1">
+				<div id="iheader" className={fullscreen()}>
 					<a id="orglink" href="/#">
 						<img id="logo" className="nav" src="img/logo_glossy.svg"/>
 					</a>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 rgroup col-md-10 col-md-offset-1">
+				<div className={fullscreen("rgroup")}>
 					<div>
 						{rating}
 						{header}

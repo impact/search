@@ -6,6 +6,8 @@ import Result = require("./Result");
 import { ImpactIndex, Library, libhash } from './Index';
 import { Observable } from './State';
 
+import { fullscreen } from './Impact';
+
 function match(t: string, lib: Library): boolean {
 	var inname = lib.name.toLowerCase().indexOf(t)>-1;
 	var indesc = lib.description.toLowerCase().indexOf(t)>-1;
@@ -90,7 +92,11 @@ class Component extends React.Component<Props, State> {
 
 		// If we don't have an index yet, just return this
 		if (index==null) {
-			return <div className="col-lg-12 centered">Loading...</div>
+			return (
+				<div className={fullscreen("centered")}>
+					Loading...
+				</div>
+			);
 		}
 
 		// Compute search results
@@ -113,15 +119,15 @@ class Component extends React.Component<Props, State> {
 				</button>
 			</span>
 		</div>;
-
+		
 		// The complete HTML for this component
 		var content =
 		<div id="search" className="row">
-			<div className="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 centered">
+			<div className={fullscreen("centered")}>
 				{searchbox}
 			</div>
 			{results.length>0 ? 
-			<div className="list-group col-lg-6 col-lg-offset-3 rgroup col-md-12">
+			<div className={fullscreen("list-group", "rgroup")}>
 				{relems}
 			</div> : null}
 		</div>
