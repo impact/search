@@ -4,7 +4,7 @@
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"moduleResolution": "node",
-		"outDir": "./src",
+		"outDir": "./build",
 		"jsx": "react"
     },
     "files": [
