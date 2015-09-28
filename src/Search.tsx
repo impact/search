@@ -91,7 +91,7 @@ class Component extends React.Component<Props, State> {
 
 		// If we don't have an index yet, just return this
 		if (index==null) {
-			return <div className="log-lg-6 col-lg-offset-3 centered">Loading...</div>
+			return <div className="col-lg-12 centered">Loading...</div>
 		}
 
 		// Compute search results
