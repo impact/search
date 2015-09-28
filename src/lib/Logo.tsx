@@ -13,7 +13,7 @@ class Component extends React.Component<Props, {}> {
 		var lead = (this.props.small ? null : 
 			<div className={fullscreen("centered")}>
 				<p className="lead">
-					A Modelica Search Engine <span id="version">({version})</span>
+					The Modelica Search Engine <span id="version">({version})</span>
 				</p>
 			</div>);
 		var small = !this.props.small;
