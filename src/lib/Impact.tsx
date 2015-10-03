@@ -14,6 +14,7 @@ import Search = require("./Search");
 import Listing = require("./Listing");
 import Detailed = require("./Detailed");
 import Logo = require("./Logo");
+import Hints = require("./Hints");
 
 interface RouteParams {
 	hash: string;
@@ -60,9 +61,9 @@ export function Mount(node: Element) {
 					return (
 						<div>
 							<Logo small={false}/>
-
 							<Search index={index}
 								term={store.term} updateTerm={(s) => store.updateTerm(s)}/>
+							<Hints show={true}/>
 						</div>);
 				}
 			});
