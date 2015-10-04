@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - 0.12
+
+before_install:
+  - npm install -g webpack-dev-server
+  - npm install -g bower
+  - npm install -g tsd
+  - ./setup.sh
+
+script: make local
+
+notifications:
+  email: false
