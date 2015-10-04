@@ -11,6 +11,7 @@
 		"./src/entry.ts",
 		"./src/lib/Application.tsx",
 		"./src/lib/Detailed.tsx",
+		"./src/lib/GithubRibbon.tsx",
 		"./src/lib/Hints.tsx",
 		"./src/lib/Impact.tsx",
 		"./src/lib/Index.ts",
