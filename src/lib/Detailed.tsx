@@ -61,10 +61,11 @@ class Component extends React.Component<Props, {}> {
 		return (
 			<div id="details">
 				<div id="iheader" className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<a id="orglink" href="/#">
-						<img id="logo" className="nav" src="img/logo_glossy.svg"/>
-					</a>
+					<Link id="orglink" to="root">
+					   <img id="logo" className="nav" src="img/logo_glossy.svg"/>
+			        </Link>
 				</div>
+
 				<div className={fullscreen("rgroup")}>
 					<div>
 						{rating}
@@ -81,6 +82,7 @@ class Component extends React.Component<Props, {}> {
 					</div>
 				</div>
 				{back_button}
+
 			</div>);
 	}
 }
