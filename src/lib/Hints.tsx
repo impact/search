@@ -13,7 +13,7 @@ class Component extends React.Component<Props, {}> {
 		<div className="row">
 			<div className={fullscreen("centered")}>
 				<p className="hints">
-					Click <Link to="all">here</Link> to see all the libraries.
+					Click <Link to="all">here</Link> to see a list of all libraries
 				</p>
 			</div>
 		</div> :
