@@ -14,6 +14,7 @@ import Search = require("./Search");
 import Listing = require("./Listing");
 import Detailed = require("./Detailed");
 import Logo = require("./Logo");
+import GithubRibbon = require("./GithubRibbon");
 
 interface RouteParams {
 	hash: string;
@@ -59,6 +60,7 @@ export function Mount(node: Element) {
 				render() {
 					return (
 						<div>
+							<GithubRibbon/>
 							<Logo small={false}/>
 
 							<Search index={index}
