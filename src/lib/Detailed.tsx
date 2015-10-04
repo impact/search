@@ -1,6 +1,7 @@
 import React = require("react");
 import semver = require('semver');
 
+import { Link } from 'react-router';
 import { Library } from './Index';
 
 import { fullscreen } from './Impact';
@@ -52,9 +53,9 @@ class Component extends React.Component<Props, {}> {
 
 		var back_button =
 		<div className={fullscreen("rgroup")}>
-      <a className="btn btn-default" href='/#'>
-				<span className="glyphicon glyphicon-chevron-left"></span>Back
-			</a>
+			<Link to="root">
+			<span className="glyphicon glyphicon-chevron-left"></span>Back
+		</Link>
 		</div>;
 
 		return (
