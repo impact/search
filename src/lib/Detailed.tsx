@@ -44,11 +44,18 @@ class Component extends React.Component<Props, {}> {
 			</h4>;
 		}
 
-		var rating = 
+		var rating =
 		<h5 className="pullright">
 			Rating: {stars} &nbsp;
 			<span className="glyphicon glyphicon-star" aria-hidden="true"></span>
 		</h5>;
+
+		var back_button =
+		<div className={fullscreen("rgroup")}>
+      <a className="btn btn-default" href='/#'>
+				<span className="glyphicon glyphicon-chevron-left"></span>Back
+			</a>
+		</div>;
 
 		return (
 			<div id="details">
@@ -72,6 +79,7 @@ class Component extends React.Component<Props, {}> {
 						</p>
 					</div>
 				</div>
+				{back_button}
 			</div>);
 	}
 }
