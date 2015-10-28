@@ -20,7 +20,7 @@ clean:
 	-rm -f dist/*
 	-rm -rf build/*
 	-rm -f src/entry.js*
-	-rm -f src/lib/*.js*
+	-rm -f src/lib/*.js* src/lib/version.ts
 
 distclean: clean
 	-rm -rf node_modules
