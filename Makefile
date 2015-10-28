@@ -1,10 +1,15 @@
 STATIC_DIR = ../impact.github.io
 
+deps:
+	bower install
+	npm install
+	tsd reinstall
+
 local:
 	echo "export = '`git describe --tags`'" > src/lib/version.ts
 	webpack
 
-watch:
+watch: deps
 	echo "export = '`git describe --tags`'" > src/lib/version.ts
 	webpack-dev-server --watch
 
@@ -24,3 +29,6 @@ clean:
 
 distclean: clean
 	-rm -rf node_modules
+	-rm -rf bower_components
+	-rm -rf js
+	-rm -rf typings
