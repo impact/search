@@ -17,7 +17,7 @@ publish: local
 	cp -r bower_components/bootstrap $(STATIC_DIR)/bower_components
 
 clean:
-	-rm dist/*
+	-rm -f dist/*
 	-rm -rf build/*
-	-rm src/entry.js*
-	-rm src/lib/*.js*
+	-rm -f src/entry.js*
+	-rm -f src/lib/*.js*
