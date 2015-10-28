@@ -1,6 +1,6 @@
 {
   "name": "impact-app",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An impact web application",
   "main": "index.html",
   "scripts": {
