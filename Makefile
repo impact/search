@@ -21,3 +21,6 @@ clean:
 	-rm -rf build/*
 	-rm -f src/entry.js*
 	-rm -f src/lib/*.js*
+
+distclean: clean
+	-rm -rf node_modules
