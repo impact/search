@@ -12,3 +12,5 @@ script: make local
 
 notifications:
   email: false
+
+sudo: false
