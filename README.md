@@ -23,6 +23,12 @@ Once you've done that, you'll want to do the following commands to
 pull in all the dependencies:
 
 ```
+$ make deps
+```
+
+which will in turn trigger the following three commands:
+
+```
 $ bower install
 $ npm install
 $ tsd reinstall
