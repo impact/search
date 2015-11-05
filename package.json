@@ -4,12 +4,14 @@
   "description": "An impact web application",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "(cd tests; tsc) && (cd tests/build/tests; mocha .)"
   },
   "author": "Michael Tiller (michael.tiller@gmail.com)",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^3.4.0",
     "css-loader": "^0.19.0",
+    "mocha": "^2.3.3",
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.12.4",
     "ts-loader": "^0.5.5",
@@ -18,10 +20,11 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
-    "react-router": "^0.13.3",
     "react": "^0.13.3",
     "react-github-fork-ribbon": "^0.3",
-    "sha1": "^1.1.1",
-    "semver": "^5.0.3"
+    "react-router": "^0.13.3",
+    "redux-actions": "^0.8.0",
+    "semver": "^5.0.3",
+    "sha1": "^1.1.1"
   }
 }

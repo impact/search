@@ -28,6 +28,12 @@
     },
     "redux-actions/redux-actions.d.ts": {
       "commit": "89b617bb31b9b977f94b8c6937dddab5488cb67b"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "35989a3ab4834b8e8b2b56788f1d4fc46a25dc8d"
+    },
+    "chai/chai.d.ts": {
+      "commit": "35989a3ab4834b8e8b2b56788f1d4fc46a25dc8d"
     }
   }
 }
