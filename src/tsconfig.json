@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+		"module": "commonjs",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"moduleResolution": "node",
+		"outDir": "../build",
+		"jsx": "react"
+    },
+    "files": [
+		"./entry.ts",
+		"./lib/Application.tsx",
+		"./lib/Detailed.tsx",
+		"./lib/GithubRibbon.tsx",
+		"./lib/Hints.tsx",
+		"./lib/Impact.tsx",
+		"./lib/Index.ts",
+		"./lib/Listing.tsx",
+		"./lib/Logo.tsx",
+		"./lib/Result.tsx",
+		"./lib/Search.tsx",
+		"./lib/State.ts",
+		"./lib/Store.ts",
+		"../typings/react/react-global.d.ts",
+		"../typings/redux/redux.d.ts",
+		"../typings/redux-actions/redux-actions.d.ts",
+		"../typings/react-router/react-router.d.ts",
+		"../typings/jquery/jquery.d.ts",
+		"../typings/semver/semver.d.ts"
+    ]
+}
