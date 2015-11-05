@@ -14,10 +14,11 @@
 	],
     "files": [
 		"./test_state.ts",
+		"../src/redux.d.ts",
+		"../typings/axios/axios.d.ts",
 		"../typings/mocha/mocha.d.ts",
 		"../typings/chai/chai.d.ts",
 		"../typings/react/react-global.d.ts",
-		"../src/redux.d.ts",
 		"../typings/redux-actions/redux-actions.d.ts",
 		"../typings/react-router/react-router.d.ts",
 		"../typings/jquery/jquery.d.ts",

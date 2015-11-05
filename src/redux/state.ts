@@ -1,18 +1,27 @@
+import { ImpactIndex } from '../lib/Index';
 import { handleActions, Action, Reducer } from 'redux-actions';
 
-import * as types from './types';
+import * as actions from './actions';
 
 export class State {
 	public term: string;
+	public index: ImpactIndex;
 
 	// The constructor creates a reasonable initial state
 	constructor() {
 		this.term="";
+		this.index = null;
 	}
 
 	public setTerm(term: string): State {
 		var ret = this.clone();
 		ret.term = term;
+		return ret;
+	}
+
+	public loadIndex(index: ImpactIndex): State {
+		var ret = this.clone();
+		ret.index = index;
 		return ret;
 	}
 
@@ -24,7 +33,10 @@ export class State {
 }
 
 export var rootReducer: Reducer<State> = handleActions<State>({
-  [types.SET_TERM]: (state: State, action: Action): State => {
+  [actions.SET_TERM]: (state: State, action: Action): State => {
 	  return state.setTerm(action.payload);
+  },
+  [actions.LOAD_INDEX]: (state: State, action: Action): State => {
+	  return state.loadIndex(action.payload);
   }
 }, new State());
