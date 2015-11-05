@@ -9,6 +9,8 @@
     },
     "files": [
 		"./redux.d.ts",
+		"./react-redux.d.ts",
+
 		"./entry.ts",
 		"./redux-tests.ts",
 		"./redux/actions.ts",

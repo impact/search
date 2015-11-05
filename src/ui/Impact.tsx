@@ -2,10 +2,16 @@
 import React = require('react');
 import Addons = require('react/addons');
 
+// react-redux/redux
+import { createStore } from 'redux';
+import { Provider } from 'react-redux'
+
 // Some elements and functions from react-router
 import { Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
 import { Library, ImpactIndex, libhash, findLibrary } from '../impact/Index';
+
+import { rootReducer } from '../redux/state';
 
 // Local Modules
 import Store = require('./Store');
@@ -46,6 +52,7 @@ export function fullscreen(...names: string[]): string {
 export function Mount(node: Element) {
 	// Create a store
 	var store = new Store();
+	var state = createStore(rootReducer);
 
 	// Trigger and asyncronous request to load the index
 	store.load().then(() => {
@@ -111,6 +118,20 @@ export function Mount(node: Element) {
 			<Route handler={DetailedHandler} path="library/:hash" name="lib"/>
 			<DefaultRoute handler={SearchContent}/>
 		</Route>;
+
+		// This doesn't work!
+		/*
+		runRouter(routes, HashLocation, (Handler, routerState) => {
+			// note "routerState" here
+			React.render(
+					<Provider store={state}>
+					// note "routerState" here: important to pass it down
+					{() => <Handler routerState={routerState} />}
+					</Provider>,
+				node
+			);
+		});
+		*/
 
 		// Associate these routes with the application node
 		runRouter(routes, HashLocation, function (Handler) {
