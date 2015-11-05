@@ -22,7 +22,7 @@
 		"./lib/State.ts",
 		"./lib/Store.ts",
 		"../typings/react/react-global.d.ts",
-		"../typings/redux/redux.d.ts",
+		"./redux.d.ts",
 		"../typings/redux-actions/redux-actions.d.ts",
 		"../typings/react-router/react-router.d.ts",
 		"../typings/jquery/jquery.d.ts",
