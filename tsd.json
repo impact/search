@@ -22,6 +22,12 @@
     },
     "node/node.d.ts": {
       "commit": "54f064352a3615443f7bff4198078db15e28247b"
+    },
+    "redux/redux.d.ts": {
+      "commit": "1aa64fe4bd7f378a883f848a1c8aa9ec1f32ea60"
+    },
+    "redux-actions/redux-actions.d.ts": {
+      "commit": "89b617bb31b9b977f94b8c6937dddab5488cb67b"
     }
   }
 }
