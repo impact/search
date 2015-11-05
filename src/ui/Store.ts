@@ -1,4 +1,4 @@
-import { ImpactIndex } from './Index';
+import { ImpactIndex } from '../impact/Index';
 import { SubState, Observable } from './State';
 
 // This class represents the storage of all state information for the

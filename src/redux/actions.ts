@@ -4,7 +4,7 @@ var Promise = es6.Promise
 
 import axios = require('axios')
 
-import { ImpactIndex } from '../lib/Index';
+import { ImpactIndex } from '../impact/Index';
 import { Reducer } from 'redux';
 //import { createAction, Action } from 'redux-actions';
 import { State, rootReducer } from './state';

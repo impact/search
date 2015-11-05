@@ -1,4 +1,4 @@
-import { ImpactIndex } from '../lib/Index';
+import { ImpactIndex } from '../impact/Index';
 import { handleActions, Action, Reducer } from 'redux-actions';
 
 import * as actions from './actions';

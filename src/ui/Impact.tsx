@@ -5,7 +5,7 @@ import Addons = require('react/addons');
 // Some elements and functions from react-router
 import { Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
-import { Library, ImpactIndex, libhash, findLibrary } from './Index';
+import { Library, ImpactIndex, libhash, findLibrary } from '../impact/Index';
 
 // Local Modules
 import Store = require('./Store');

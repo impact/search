@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { createStore } from 'redux';
 
-import { ImpactIndex } from '../src/lib/Index';
+import { ImpactIndex } from '../src/impact/Index';
 
 import { State, rootReducer } from '../src/redux/state';
 import * as actions from '../src/redux/actions';

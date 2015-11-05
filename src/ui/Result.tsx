@@ -2,7 +2,7 @@ import React = require("react");
 import semver = require('semver');
 
 import { Link } from 'react-router';
-import { Library, libhash } from './Index';
+import { Library, libhash } from '../impact/Index';
 
 function SortVersion(a: string, b: string) {
 	if (semver.gt(a, b)) return -1;

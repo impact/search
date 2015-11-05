@@ -2,7 +2,7 @@ import React = require("react");
 import semver = require('semver');
 
 import { Link } from 'react-router';
-import { Library } from './Index';
+import { Library } from '../impact/Index';
 
 import { fullscreen } from './Impact';
 
