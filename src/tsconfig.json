@@ -29,6 +29,7 @@
 		"./ui/Result.tsx",
 		"./ui/Search.tsx",
 		"./ui/State.ts",
+		"./ui/StateComponent.ts",
 		"./ui/Store.ts",
 
 		"../typings/axios/axios.d.ts",

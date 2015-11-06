@@ -12,6 +12,7 @@ import { run as runRouter } from 'react-router';
 import { Library, ImpactIndex, libhash, findLibrary } from '../impact/Index';
 
 import { rootReducer } from '../redux/state';
+import * as actions from '../redux/actions';
 
 // Local Modules
 import Store = require('./Store');
@@ -51,91 +52,79 @@ export function fullscreen(...names: string[]): string {
 // on which to attach the application.
 export function Mount(node: Element) {
 	// Create a store
-	var store = new Store();
-	var state = createStore(rootReducer);
+	var store = createStore(rootReducer);
 
-	// Trigger and asyncronous request to load the index
-	store.load().then(() => {
-		// At this point, the index is loaded.
+	// Make an async call to fetch impact data and then dispatch a
+	// loadIndex action if successful.
+	var p = actions.load("http://impact.github.io/impact_index.json", store)
 
-		var index = store.index.get();
+	// This component wrapper is necessary because of the way the router works.  When
+	// implementing handlers, it isn't possible to specify props.  So we have to create
+	// a new "factory" here that builds the component locally with props.  When can then
+	// use this "wrapped" component with the router.
+	var SearchContent = React.createClass({
+		render() {
+			// TODO: fix bindings
+			//<Search index={index} term={store.term} updateTerm={(s) => store.updateTerm(s)}/> 
+			return (
+					<div>
+					<GithubRibbon/>
+					<Logo small={false}/>
+					<Hints show={true}/>
+					</div>);
+		}
+	});
 
-		// This component wrapper is necessary because of the way the router works.  When
-		// implementing handlers, it isn't possible to specify props.  So we have to create
-		// a new "factory" here that builds the component locally with props.  When can then
-		// use this "wrapped" component with the router.
-			var SearchContent = React.createClass({
-				render() {
-					return (
-						<div>
-							<GithubRibbon/>
-							<Logo small={false}/>
-							<Search index={index}
-								term={store.term} updateTerm={(s) => store.updateTerm(s)}/>
-							<Hints show={true}/>
-						</div>);
-				}
-			});
+	// This is a wrapper around the Listing component that connections the index
+	// to the component via properties.
+	var ListingHandler = React.createClass({
+		render() {
+			// TODO: fix bindings
+			//<Listing index={index} wide={false}/>
+			return (
+					<div>
+					<Logo small={true}/>
+					</div>);
+		}
+	});
 
-		// This is a wrapper around the Listing component that connections the index
-		// to the component via properties.
-			var ListingHandler = React.createClass({
-				render() {
-					return (
-						<div>
-							<Logo small={true}/>
-							<Listing index={index} wide={false}/>
-						</div>);
-				}
-			});
+	var EmbeddedHandler = React.createClass({
+		// TODO: fix bindings
+		//<Listing index={index} wide={true}/>
+		render() {
+			return <div></div>;
+		}
+	});
 
-		var EmbeddedHandler = React.createClass({
-			render() {
-				return <div><Listing index={index} wide={true}/></div>;
-			}
-		});
+	var DetailedHandler = React.createClass({
+		contextTypes: {
+			router: React.PropTypes.func
+		},
 
-		var DetailedHandler = React.createClass({
-			contextTypes: {
-				router: React.PropTypes.func
-			},
+		render() {
+			var params = this.context.router.getCurrentParams() as RouteParams;
+			// TODO: fix bindings
+			//if (!index) return <span className="centered">Loading...</span>;
 
-			render() {
-				var params = this.context.router.getCurrentParams() as RouteParams;
-				if (!index) return <span className="centered">Loading...</span>;
+			var hash = params.hash;
+			// TODO: fix bindings
+			//var library = findLibrary(index, hash);
+			//return <Detailed library={library}/>;
+			return <div></div>;
+		}
+	});
 
-				var hash = params.hash;
-				var library = findLibrary(index, hash);
-				return <Detailed library={library}/>;
-			}
-		});
-
-		// Build our routes
-		var routes =
+	// Build our routes
+	var routes =
 		<Route handler={Application} path="/" name="root">
-			<Route handler={ListingHandler} path="all" name="all"/>
-			<Route handler={EmbeddedHandler} path="embedded" name="embedded"/>
-			<Route handler={DetailedHandler} path="library/:hash" name="lib"/>
-			<DefaultRoute handler={SearchContent}/>
+		<Route handler={ListingHandler} path="all" name="all"/>
+		<Route handler={EmbeddedHandler} path="embedded" name="embedded"/>
+		<Route handler={DetailedHandler} path="library/:hash" name="lib"/>
+		<DefaultRoute handler={SearchContent}/>
 		</Route>;
 
-		// This doesn't work!
-		/*
-		runRouter(routes, HashLocation, (Handler, routerState) => {
-			// note "routerState" here
-			React.render(
-					<Provider store={state}>
-					// note "routerState" here: important to pass it down
-					{() => <Handler routerState={routerState} />}
-					</Provider>,
-				node
-			);
-		});
-		*/
-
-		// Associate these routes with the application node
-		runRouter(routes, HashLocation, function (Handler) {
-			React.render(<Handler/>, node);
-		});
+	// Associate these routes with the application node
+	runRouter(routes, HashLocation, function (Handler) {
+		React.render(<Handler/>, node);
 	});
 }
