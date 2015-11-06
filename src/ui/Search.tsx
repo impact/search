@@ -15,31 +15,14 @@ import { computeResults } from '../impact/search';
 // with this components state (see calls to 'register' below)
 class Props {
 	public index: ImpactIndex;
-	public term: Observable<string>;
+	public term: string;
 	public updateTerm: (s: string) => void;
 }
 
-// This mirrors the contents of "Props" to show the actual states.
-// This cannot have methods because React will strip them on its internal
-// representation.
-interface State {
-	term?: string;
-	index?: ImpactIndex;
-}
-
 // A search component
-class Component extends React.Component<Props, State> {
+class Component extends React.Component<Props, {}> {
 	constructor() {
 	  	super();
-		// Not really necessary since this will be updated as soon as we
-		// register our states with the Store.
-		this.state = {};
-	}
-
-	componentDidMount() {
-		// Ask the store to automatically update our states when
-		// changes occur.
-		this.props.term.safelink(this, (v): State => { return { term: v }})
 	}
 
 	handleChange(event: JQueryEventObject) {
@@ -49,7 +32,7 @@ class Component extends React.Component<Props, State> {
 
 	// Render our component
 	render() {
-		var term = this.state.term;
+		var term = this.props.term;
 		var index = this.props.index;
 
 		// If we don't have an index yet, just return this
@@ -62,7 +45,7 @@ class Component extends React.Component<Props, State> {
 		}
 
 		// Compute search results
-		var results = computeResults(this.state.term, index);
+		var results = computeResults(this.props.term, index);
 
 		// Generate Result components for these results.
 		var relems: JSX.Element[] = results.map((result: Library) => {

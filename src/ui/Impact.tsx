@@ -3,7 +3,7 @@ import React = require('react');
 import Addons = require('react/addons');
 
 // react-redux/redux
-import { createStore } from 'redux';
+import { Store, createStore } from 'redux';
 import { Provider } from 'react-redux'
 
 // Some elements and functions from react-router
@@ -11,12 +11,12 @@ import { Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router
 import { run as runRouter } from 'react-router';
 import { Library, ImpactIndex, libhash, findLibrary } from '../impact/Index';
 
-import { rootReducer } from '../redux/state';
+import { State, rootReducer } from '../redux/state';
 import * as actions from '../redux/actions';
 
 // Local Modules
-import Store = require('./Store');
 import Application = require("./Application");
+import StateComponent = require("./StateComponent");
 import Search = require("./Search");
 import Listing = require("./Listing");
 import Detailed = require("./Detailed");
@@ -48,6 +48,37 @@ export function fullscreen(...names: string[]): string {
 	return Addons.addons.classSet(present);
 }
 
+interface ComponentBuilder<P,S> {
+	(props?: P): React.Component<P,S>;
+}
+
+function BoundClass<P,S>(store: Store<S>, pmap: (s: S) => P, elem: React.ComponentClass<P>): React.ClassicComponentClass<{}> {
+	return React.createClass<{},S>({
+		render(): React.ReactElement<{}> {
+			console.log("Rendering bound class, state = ", this.state)
+			var etype: React.ComponentClass<P> = elem;
+			var props = pmap(this.state);
+			return React.createElement(etype, props);
+		},
+		componentDidMount() {
+			console.log("Bound class mounted");
+			store.subscribe(() => {
+				console.log("State of bound class updated to ", this.state)
+				this.setState(store.getState());
+			});
+		},
+		getInitialState(): S {
+			return store.getState();
+		}
+	});
+}
+
+/*
+function Bind<S,P>(store: Store<S>, pmap: (s: S) => P, elem: React.ComponentClass<P>): React.ReactElement<P> {
+	return React.createElement<P1>(StateComponent<P1,S1>, {store: store, pmap: pmap, elem: elem});
+}
+*/
+
 // This is the entry point for the whole application.  We are passed an element
 // on which to attach the application.
 export function Mount(node: Element) {
@@ -58,6 +89,12 @@ export function Mount(node: Element) {
 	// loadIndex action if successful.
 	var p = actions.load("http://impact.github.io/impact_index.json", store)
 
+	var f: (typeof React.Component) = Search;
+	var g: React.Component<any,any> = new Search();
+	var h = React.createElement(f, null);
+	//<StateComponent store={store} pmap={pmap} elem=Search>
+	//var foo = <Search index={index} term={store.term} updateTerm={(s) => store.updateTerm(s)}/> 
+
 	// This component wrapper is necessary because of the way the router works.  When
 	// implementing handlers, it isn't possible to specify props.  So we have to create
 	// a new "factory" here that builds the component locally with props.  When can then
@@ -65,11 +102,23 @@ export function Mount(node: Element) {
 	var SearchContent = React.createClass({
 		render() {
 			// TODO: fix bindings
+			let pmap = (s: State) => {
+				return {
+					index: s.index,
+					term: s.term,
+					updateTerm: (s: string) => { store.dispatch(actions.setTerm(s)) }
+				}
+			}
+			var f: (typeof React.Component) = Search;
 			//<Search index={index} term={store.term} updateTerm={(s) => store.updateTerm(s)}/> 
+			//<StateComponent store={store} pmap={pmap} elem={Search}/>
+						
+			var BoundSearch = BoundClass(store, pmap, Search)
 			return (
 					<div>
 					<GithubRibbon/>
 					<Logo small={false}/>
+					<BoundSearch/>
 					<Hints show={true}/>
 					</div>);
 		}
