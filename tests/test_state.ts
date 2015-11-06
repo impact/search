@@ -13,14 +13,12 @@ describe("Create an initial state", () => {
 		var state = new State()
 		expect(state.term).to.equal("")
 		expect(state.index.libraries).to.deep.equal([])
-		expect(state.matching).to.deep.equal([])
 	})
 	it('should set the search term on a search term action', () => {
 		var store = createStore(rootReducer);
 		store.dispatch(actions.setTerm("buildings"));
 		expect(store.getState().term).to.equal("buildings")
 		expect(store.getState().index.libraries).to.deep.equal([])
-		expect(store.getState().matching).to.deep.equal([])
 	})
 })
 describe("Load libraries", () => {
@@ -31,19 +29,16 @@ describe("Load libraries", () => {
 		expect(store.getState().index.libraries).to.not.deep.equal([])
 		expect(store.getState().index.libraries.length).to.not.equal(0)
 		expect(store.getState().index.libraries.length).to.equal(66)
-		expect(store.getState().matching.length).to.equal(0)
 
 		store.dispatch(actions.setTerm("*"));
 		expect(store.getState().index.libraries).to.not.deep.equal([])
 		expect(store.getState().index.libraries.length).to.not.equal(0)
 		expect(store.getState().index.libraries.length).to.equal(66)
-		expect(store.getState().matching.length).to.equal(66)
 
 		store.dispatch(actions.setTerm("building"));
 		expect(store.getState().index.libraries).to.not.deep.equal([])
 		expect(store.getState().index.libraries.length).to.not.equal(0)
 		expect(store.getState().index.libraries.length).to.equal(66)
-		expect(store.getState().matching.length).to.equal(3)
 	})
 	it('should load index from the network', () => {
 		var store = createStore(rootReducer);
@@ -55,7 +50,6 @@ describe("Load libraries", () => {
 			expect(store.getState().term).to.equal("")
 			expect(store.getState().index.libraries).to.not.deep.equal([])
 			expect(store.getState().index.libraries.length).to.not.equal(0)
-			expect(store.getState().matching.length).to.equal(0)
 		});
 	})
 })

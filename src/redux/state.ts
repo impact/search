@@ -7,7 +7,6 @@ import * as actions from './actions';
 export class State {
 	public term: string;
 	public index: ImpactIndex;
-	public matching: Library[];
 
 	// The constructor creates a reasonable initial state
 	constructor() {
@@ -16,14 +15,12 @@ export class State {
 			version: "1.0.0",
 			libraries: []
 		};
-		this.matching = [];
 	}
 
 	public setTerm(term: string): State {
 		//console.log("setTerm("+term+")");
 		var ret = this.clone();
 		ret.term = term;
-		ret.matching = computeResults(term, this.index);
 		return ret;
 	}
 
@@ -31,7 +28,6 @@ export class State {
 		//console.log("loadIndex("+index+")");
 		var ret = this.clone();
 		ret.index = index;
-		ret.matching = computeResults(this.term, this.index);
 		return ret;
 	}
 
@@ -39,7 +35,6 @@ export class State {
 		var ret = new State();
 		ret.term = this.term
 		ret.index = this.index
-		ret.matching = this.matching
 		return ret
 	}
 }
