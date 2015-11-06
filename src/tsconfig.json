@@ -15,6 +15,7 @@
 		"./redux-tests.ts",
 		"./redux/actions.ts",
 		"./redux/state.ts",
+		"./redux/connect.ts",
 
 		"./impact/Index.ts",
 		"./impact/search.ts",
@@ -28,9 +29,6 @@
 		"./ui/Logo.tsx",
 		"./ui/Result.tsx",
 		"./ui/Search.tsx",
-		"./ui/State.ts",
-		"./ui/StateComponent.ts",
-		"./ui/Store.ts",
 
 		"../typings/axios/axios.d.ts",
 		"../typings/react/react.d.ts",

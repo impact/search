@@ -1,6 +1,5 @@
 import React = require('react');
 
-import { Observable } from './State';
 import { ImpactIndex, Library, libhash } from '../impact/Index';
 
 import { fullscreen } from "./Impact";

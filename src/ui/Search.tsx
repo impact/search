@@ -1,10 +1,8 @@
 import React = require('react');
 
-// TODO: use exports inside this
 import Result = require("./Result");
 
 import { ImpactIndex, Library, libhash } from '../impact/Index';
-import { Observable } from './State';
 
 import { fullscreen } from './Impact';
 

@@ -2,7 +2,7 @@ import React = require("react");
 import semver = require('semver');
 
 import { Link } from 'react-router';
-import { Library } from '../impact/Index';
+import { ImpactIndex, Library, findLibrary } from '../impact/Index';
 
 import { fullscreen } from './Impact';
 
@@ -13,7 +13,8 @@ function SortVersion(a: string, b: string) {
 }
 
 class Props {
-	  public library: Library;
+	public index: ImpactIndex;
+	public hash: string;
 }
 
 class Component extends React.Component<Props, {}> {
@@ -23,7 +24,7 @@ class Component extends React.Component<Props, {}> {
 	}
 
 	render() {
-		var lib = this.props.library;
+		var lib = findLibrary(this.props.index, this.props.hash);
 		var name = lib.name;
 		var homepage = lib.homepage;
 		var stars = lib.stars;
@@ -73,7 +74,7 @@ class Component extends React.Component<Props, {}> {
 						{site}
 						<h4>Description</h4>
 						<p>
-							{this.props.library.description}
+							{lib.description}
 						</p>
 						<h4>Versions</h4>
 						<p className="centered">

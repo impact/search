@@ -3,21 +3,19 @@ import React = require('react');
 import Addons = require('react/addons');
 
 // react-redux/redux
-import { Store, createStore } from 'redux';
-import { Provider } from 'react-redux'
+import { createStore } from 'redux';
 
 // Some elements and functions from react-router
 import { Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
-import { Library, ImpactIndex, libhash, findLibrary } from '../impact/Index';
 
+// Stuff related to our global state
 import { State, rootReducer } from '../redux/state';
 import * as actions from '../redux/actions';
 import { bindClass } from '../redux/connect.ts';
 
 // Local Modules
 import Application = require("./Application");
-import StateComponent = require("./StateComponent");
 import Search = require("./Search");
 import Listing = require("./Listing");
 import Detailed = require("./Detailed");
@@ -49,10 +47,6 @@ export function fullscreen(...names: string[]): string {
 	return Addons.addons.classSet(present);
 }
 
-interface ComponentBuilder<P,S> {
-	(props?: P): React.Component<P,S>;
-}
-
 // This is the entry point for the whole application.  We are passed an element
 // on which to attach the application.
 export function Mount(node: Element) {
@@ -63,22 +57,23 @@ export function Mount(node: Element) {
 	// loadIndex action if successful.
 	var p = actions.load("http://impact.github.io/impact_index.json", store)
 
+	// This binds all props of this component.  In this case,
+	// they are computed from the store state, but they don't
+	// really have to be.
+	var BoundSearch = bindClass(store, Search, (s: State) => {
+		return {
+			index: s.index,
+			term: s.term,
+			updateTerm: (s: string) => { store.dispatch(actions.setTerm(s)) }
+		}
+	});
+
 	// This component wrapper is necessary because of the way the router works.  When
 	// implementing handlers, it isn't possible to specify props.  So we have to create
 	// a new "factory" here that builds the component locally with props.  When can then
 	// use this "wrapped" component with the router.
 	var SearchContent = React.createClass({
 		render() {
-			// This binds all props of this component.  In this case,
-			// they are computed from the store state, but they don't
-			// really have to be.
-			var BoundSearch = bindClass(store, Search, (s: State) => {
-				return {
-					index: s.index,
-					term: s.term,
-					updateTerm: (s: string) => { store.dispatch(actions.setTerm(s)) }
-				}
-			});
 
 			return (
 					<div>
@@ -92,15 +87,14 @@ export function Mount(node: Element) {
 
 	// This is a wrapper around the Listing component that connections the index
 	// to the component via properties.
+	var BoundListing = bindClass(store, Listing, (s: State) => {
+		return {
+			index: s.index,
+			wide: false
+		}
+	});
 	var ListingHandler = React.createClass({
 		render() {
-			var BoundListing = bindClass(store, Listing, (s: State) => {
-				return {
-					index: s.index,
-					wide: false
-				}
-			});
-
 			return (
 					<div>
 					<Logo small={true}/>
@@ -109,11 +103,17 @@ export function Mount(node: Element) {
 		}
 	});
 
+
+	var BoundListing = bindClass(store, Listing, (s: State) => {
+		return {
+			index: s.index,
+			wide: true
+		}
+	});
+
 	var EmbeddedHandler = React.createClass({
-		// TODO: fix bindings
-		//<Listing index={index} wide={true}/>
 		render() {
-			return <div></div>;
+			return <BoundListing/>;
 		}
 	});
 
@@ -126,16 +126,10 @@ export function Mount(node: Element) {
 			var params = this.context.router.getCurrentParams() as RouteParams;
 			var BoundDetails = bindClass(store, Detailed, (s: State) => {
 				return {
-					library: findLibrary(s.index, hash)
+					hash: params.hash,
+					index: s.index
 				}
 			});
-			// TODO: fix bindings
-			//if (!index) return <span className="centered">Loading...</span>;
-
-			var hash = params.hash;
-			// TODO: fix bindings
-			//var library = findLibrary(index, hash);
-			//return <Detailed library={library}/>;
 			return <BoundDetails/>;
 		}
 	});
