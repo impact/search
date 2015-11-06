@@ -20,6 +20,7 @@ export class State {
 	}
 
 	public setTerm(term: string): State {
+		console.log("setTerm("+term+")");
 		var ret = this.clone();
 		ret.term = term;
 		ret.matching = computeResults(term, this.index);
@@ -27,6 +28,7 @@ export class State {
 	}
 
 	public loadIndex(index: ImpactIndex): State {
+		console.log("loadIndex("+index+")");
 		var ret = this.clone();
 		ret.index = index;
 		ret.matching = computeResults(this.term, this.index);

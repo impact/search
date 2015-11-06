@@ -6,11 +6,11 @@ deps:
 	tsd reinstall
 
 local:
-	echo "export = '`git describe --tags`'" > src/lib/version.ts
+	echo "export = '`git describe --tags`'" > src/ui/version.ts
 	webpack
 
 watch: deps
-	echo "export = '`git describe --tags`'" > src/lib/version.ts
+	echo "export = '`git describe --tags`'" > src/ui/version.ts
 	webpack-dev-server --watch
 
 publish: local
