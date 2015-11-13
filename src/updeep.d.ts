@@ -5,9 +5,9 @@
 
 declare module Updeep {
 	interface IStatic {
-		<T>(updates: {}, obj: T): T;
-		updateIn<T>(path: string | Array<string | number>, value: any, obj: T): T;
-		constant<T>(obj: T): T;
+		<T extends {},U extends {}>(updates: U, obj: T): T;
+		updateIn<T extends {}>(path: string | Array<string | number>, value: any, obj: T): T;
+		constant<T extends {}>(obj: T): T;
 	}
 }
 
