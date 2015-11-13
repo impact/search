@@ -1,49 +1,32 @@
+import updeep = require('updeep');
+
 import { ImpactIndex, Library } from '../impact/Index';
-import { handleActions, Action, Reducer } from 'redux-actions';
+import { Action, FluxStandardAction as FSA, Reducer } from 'redux';
+import { handleActions } from 'redux-actions';
 import { computeResults } from '../impact/search';
 
 import * as actions from './actions';
 
-export class State {
-	public term: string;
-	public index: ImpactIndex;
+export interface State {
+	term: string;
+	index: ImpactIndex;
+}
 
-	// The constructor creates a reasonable initial state
-	constructor() {
-		this.term="";
-		this.index = {
+function initialState(): State {
+	return {
+		term: "",
+		index: {
 			version: "1.0.0",
 			libraries: []
-		};
-	}
-
-	public setTerm(term: string): State {
-		//console.log("setTerm("+term+")");
-		var ret = this.clone();
-		ret.term = term;
-		return ret;
-	}
-
-	public loadIndex(index: ImpactIndex): State {
-		//console.log("loadIndex("+index+")");
-		var ret = this.clone();
-		ret.index = index;
-		return ret;
-	}
-
-	private clone(): State {
-		var ret = new State();
-		ret.term = this.term
-		ret.index = this.index
-		return ret
+		}
 	}
 }
 
 export var rootReducer: Reducer<State> = handleActions<State>({
-  [actions.SET_TERM]: (state: State, action: Action): State => {
-	  return state.setTerm(action.payload);
-  },
-  [actions.LOAD_INDEX]: (state: State, action: Action): State => {
-	  return state.loadIndex(action.payload);
-  }
-}, new State());
+	[actions.SET_TERM]: (state: State, action: FSA<string, void>): State => {
+		return updeep({term: action.payload}, state);
+	},
+	[actions.LOAD_INDEX]: (state: State, action: FSA<ImpactIndex,void>): State => {
+		return updeep({index: action.payload}, state);
+	}
+}, initialState());

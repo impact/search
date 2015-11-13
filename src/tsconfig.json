@@ -8,6 +8,7 @@
 		"jsx": "react"
     },
     "files": [
+		"./updeep.d.ts",
 		"./redux.d.ts",
 		"./react-redux.d.ts",
 
