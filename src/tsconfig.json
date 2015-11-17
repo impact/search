@@ -6,36 +6,5 @@
 		"moduleResolution": "node",
 		"outDir": "../build",
 		"jsx": "react"
-    },
-    "files": [
-		"./updeep.d.ts",
-		"./redux.d.ts",
-		"./react-redux.d.ts",
-
-		"./entry.ts",
-		"./redux-tests.ts",
-		"./redux/actions.ts",
-		"./redux/state.ts",
-		"./redux/connect.ts",
-
-		"./impact/Index.ts",
-		"./impact/search.ts",
-
-		"./ui/Application.tsx",
-		"./ui/Detailed.tsx",
-		"./ui/GithubRibbon.tsx",
-		"./ui/Hints.tsx",
-		"./ui/Impact.tsx",
-		"./ui/Listing.tsx",
-		"./ui/Logo.tsx",
-		"./ui/Result.tsx",
-		"./ui/Search.tsx",
-
-		"../typings/axios/axios.d.ts",
-		"../typings/react/react.d.ts",
-		"../typings/redux-actions/redux-actions.d.ts",
-		"../typings/react-router/react-router.d.ts",
-		"../typings/jquery/jquery.d.ts",
-		"../typings/semver/semver.d.ts"
-    ]
+    }
 }

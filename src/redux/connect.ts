@@ -68,6 +68,7 @@ export function bindClass<P,S>(store: SimpleStore<S>,
 				// an actual component.
 				this.setState(store.getState());
 			});
+			this.setState(store.getState());
 		},
 		getInitialState(): S {
 			// Grab the initial state from the store

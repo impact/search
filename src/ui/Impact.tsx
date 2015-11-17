@@ -2,17 +2,16 @@
 import React = require('react');
 import Addons = require('react/addons');
 
-// react-redux/redux
-import { createStore } from 'redux';
-
 // Some elements and functions from react-router
 import { Route, DefaultRoute, HistoryLocation, HashLocation } from 'react-router';
 import { run as runRouter } from 'react-router';
 
 // Stuff related to our global state
-import { State, rootReducer } from '../redux/state';
+import { State, initialState } from '../redux/state';
 import * as actions from '../redux/actions';
 import { bindClass } from '../redux/connect.ts';
+
+import * as tsr from 'ts-redux';
 
 // Local Modules
 import Application = require("./Application");
@@ -51,7 +50,7 @@ export function fullscreen(...names: string[]): string {
 // on which to attach the application.
 export function Mount(node: Element) {
 	// Create a store
-	var store = createStore(rootReducer);
+	var store = tsr.updeepStore(initialState());
 
 	// Make an async call to fetch impact data and then dispatch a
 	// loadIndex action if successful.

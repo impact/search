@@ -23,7 +23,7 @@ class Component extends React.Component<Props, {}> {
 	  	super();
 	}
 
-	handleChange(event: JQueryEventObject) {
+	handleChange(event: React.FormEvent) {
 		var term: string = (event.target as any).value;
 		this.props.updateTerm(term);
 	}

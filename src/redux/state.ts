@@ -1,11 +1,12 @@
 import updeep = require('updeep');
 
 import { ImpactIndex, Library } from '../impact/Index';
-import { Action, FluxStandardAction as FSA, Reducer } from 'redux';
-import { handleActions } from 'redux-actions';
+import { Action, Reducer } from 'redux';
 import { computeResults } from '../impact/search';
 
 import * as actions from './actions';
+
+import { FluxStandardAction as FSA } from 'ts-redux';
 
 // Definition of application state
 export interface State {
@@ -14,7 +15,7 @@ export interface State {
 }
 
 // Function to compute initial application state
-function initialState(): State {
+export function initialState(): State {
 	return {
 		term: "",
 		index: {
@@ -23,13 +24,3 @@ function initialState(): State {
 		}
 	}
 }
-
-// Definition of reducer and the actions that it knows how to dispatch
-export var rootReducer: Reducer<State> = handleActions<State>({
-	[actions.SET_TERM]: (state: State, action: FSA<string, void>): State => {
-		return updeep({term: action.payload}, state);
-	},
-	[actions.LOAD_INDEX]: (state: State, action: FSA<ImpactIndex,void>): State => {
-		return updeep({index: action.payload}, state);
-	}
-}, initialState());

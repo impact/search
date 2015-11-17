@@ -1,8 +1,4 @@
-/// <reference path="../../typings/node/node.d.ts"/>
-
 var sha1: (x: string) => string = require('sha1');
-
-//import sha1 = require("sha1");
 
 export interface Dependency {
 	name: string;
