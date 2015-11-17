@@ -31,7 +31,7 @@
     "redux-actions": "^0.8.0",
     "semver": "^5.0.3",
     "sha1": "^1.1.1",
-    "ts-redux": "^0.1.1",
+    "ts-redux": "^0.1.2",
     "updeep": "^0.10.1"
   }
 }
