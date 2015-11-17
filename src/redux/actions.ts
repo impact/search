@@ -1,9 +1,6 @@
 import es6 = require("es6-promise")
 
-var Promise = es6.Promise
-
-import { Promise } from 'axios';
-//import axios = require('axios')
+import axios = require('axios')
 
 import { ImpactIndex } from '../impact/Index';
 import { Reducer } from 'redux';
