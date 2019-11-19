@@ -1,11 +1,24 @@
 import React from "react";
 import logo from "../impact-logo.svg";
-import { InputGroup } from "@blueprintjs/core";
+import { InputGroup, Card, Elevation, Button } from "@blueprintjs/core";
 
 export interface HomeProps {
     terms: string;
     setTerms: (v: string) => void;
 }
+
+export interface HitProps {
+    title: string;
+    text: string;
+}
+export const Hit = (props: HitProps) => {
+    return (
+        <Card interactive={true} elevation={Elevation.TWO} style={{ padding: 2, margin: 2 }}>
+            <h4 style={{ margin: 2, padding: 2 }}>{props.title}</h4>
+            <p style={{ margin: 2, padding: 2 }}>{props.text}</p>
+        </Card>
+    );
+};
 
 export const HomeScreen = (props: HomeProps) => {
     return (
@@ -30,6 +43,16 @@ export const HomeScreen = (props: HomeProps) => {
                     placeholder="Search terms..."
                     value={props.terms}
                 />
+            </div>
+            <div style={{ marginTop: "10px", width: "45vw", minWidth: "40em" }}>
+                <Hit title="Buildings" text="A library of building components" />
+                <Card interactive={true} elevation={Elevation.TWO} style={{ padding: 2, margin: 2 }}>
+                    <h4 style={{ margin: 2, padding: 2 }}>Name</h4>
+                    <p style={{ margin: 2, padding: 2 }}>Card content</p>
+                </Card>
+                <Card interactive={true} elevation={Elevation.TWO}>
+                    <p>Card content</p>
+                </Card>
             </div>
         </div>
     );
