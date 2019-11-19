@@ -8,15 +8,29 @@ export interface HomeProps {
 }
 
 export interface HitProps {
+    first?: boolean;
+    last?: boolean;
     title: string;
     text: string;
 }
+
+const firstStyle: React.CSSProperties = {
+    borderTopLeftRadius: "5px",
+    borderTopRightRadius: "5px",
+};
+
+const lastStyle: React.CSSProperties = {
+    borderBottomLeftRadius: "5px",
+    borderBottomRightRadius: "5px",
+};
+
 export const Hit = (props: HitProps) => {
+    const style = props.first ? firstStyle : props.last ? lastStyle : {};
     return (
-        <Card interactive={true} elevation={Elevation.TWO} style={{ padding: 2, margin: 2 }}>
+        <div style={{ ...style, boxSizing: "border-box", width: "100%", border: "1px solid #cccccc" }}>
             <h4 style={{ margin: 2, padding: 2 }}>{props.title}</h4>
             <p style={{ margin: 2, padding: 2 }}>{props.text}</p>
-        </Card>
+        </div>
     );
 };
 
@@ -44,15 +58,10 @@ export const HomeScreen = (props: HomeProps) => {
                     value={props.terms}
                 />
             </div>
-            <div style={{ marginTop: "10px", width: "45vw", minWidth: "40em" }}>
-                <Hit title="Buildings" text="A library of building components" />
-                <Card interactive={true} elevation={Elevation.TWO} style={{ padding: 2, margin: 2 }}>
-                    <h4 style={{ margin: 2, padding: 2 }}>Name</h4>
-                    <p style={{ margin: 2, padding: 2 }}>Card content</p>
-                </Card>
-                <Card interactive={true} elevation={Elevation.TWO}>
-                    <p>Card content</p>
-                </Card>
+            <div style={{ marginTop: "10px", width: "45vw", minWidth: "20em" }}>
+                <Hit first={true} title="Buildings" text="A library of building components" />
+                <Hit title="Next" text="More text" />
+                <Hit last={true} title="Vehicle Dynamics" text="A library about vehicle dynamics" />
             </div>
         </div>
     );
