@@ -8016,6 +8016,21 @@ pretty-format@^24.9.0:
     ansi-styles "^3.2.0"
     react-is "^16.8.4"
 
+primeflex@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/primeflex/-/primeflex-1.0.0.tgz#ab8eaac11f1459b7615d1c4584da401beb0dedc5"
+  integrity sha512-/K9iHXm5wu6gZycQDP/gsfX7BpJKSNVhxTOZAJBLH88idPtC2lMgUXm28qfXFqsbxaTI49oBuMYBFlg/DBmUMg==
+
+primeicons@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/primeicons/-/primeicons-2.0.0.tgz#ec3e5a8d4d04a09309225a5a57deb911e08dc0d3"
+  integrity sha512-GJTCeMSQU8UU1GqbsaDrg/IH+b/vSinJQl52NVpdJ7sShYLZA8Eq6jLF48Ye3N/dQloGrE07i7XsZvxQ9pNbqg==
+
+primereact@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npmjs.org/primereact/-/primereact-3.3.2.tgz#0d47fd6a8cc9e22e4d0beb06a86c1bf3401f1b77"
+  integrity sha512-yPW7nUbYKEIxtFzZez+dSp89MSqyELBf9XcUiBLkRwaVMSg/hQMCkp+M32VZnNiYwNfXHkz4/cKBVhvzQKdkEA==
+
 private@^0.1.6:
   version "0.1.8"
   resolved "https://registry.npmjs.org/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"

@@ -1,43 +1,74 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../impact-logo.svg";
-import { InputGroup, Card, Elevation, Button } from "@blueprintjs/core";
+import { InputGroup, ButtonGroup, Button } from "@blueprintjs/core";
+
+import "./hover.css";
+import { ImpactIndex, Library, uniqueId } from "../data";
 
 export interface HomeProps {
     terms: string;
     setTerms: (v: string) => void;
+    setSelected: (v: string) => void;
+    index: ImpactIndex;
 }
 
 export interface HitProps {
-    first?: boolean;
-    last?: boolean;
-    title: string;
-    text: string;
+    id: string;
+    index: ImpactIndex;
+    setSelected: (v: string) => void;
 }
 
-const firstStyle: React.CSSProperties = {
-    borderTopLeftRadius: "5px",
-    borderTopRightRadius: "5px",
-};
-
-const lastStyle: React.CSSProperties = {
-    borderBottomLeftRadius: "5px",
-    borderBottomRightRadius: "5px",
-};
-
 export const Hit = (props: HitProps) => {
-    const style = props.first ? firstStyle : props.last ? lastStyle : {};
+    const lib = props.index.libraries.find(lib => uniqueId(lib) === props.id);
+    if (!lib) return <p>Unknown library id {props.id}</p>;
     return (
-        <div style={{ ...style, boxSizing: "border-box", width: "100%", border: "1px solid #cccccc" }}>
-            <h4 style={{ margin: 2, padding: 2 }}>{props.title}</h4>
-            <p style={{ margin: 2, padding: 2 }}>{props.text}</p>
+        <div className="hover">
+            <h4 style={{ margin: 2, padding: 2 }}>{lib.name}</h4>
+            <p style={{ margin: 2, padding: 2 }}>{lib.description}</p>
         </div>
     );
 };
 
-export const HomeScreen = (props: HomeProps) => {
+export const ButtonHit = (props: HitProps) => {
+    const lib = props.index.libraries.find(lib => uniqueId(lib) === props.id);
+    if (!lib) return <p>Unknown library id {props.id}</p>;
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <img style={{ width: 400 }} src={logo}></img>
+        <Button
+            text={
+                <>
+                    <h4 style={{ marginTop: 2 }}>{lib.name}</h4>
+                    <p style={{ width: "100%" }}>{lib.description}</p>
+                </>
+            }
+            onClick={() => {
+                props.setSelected(props.id);
+            }}
+        />
+    );
+};
+
+function match(term: string) {
+    return (lib: Library, index: number): boolean => {
+        return lib.name.startsWith(term);
+    };
+}
+
+function searchResults(terms: string, index: ImpactIndex): string[] {
+    //if (terms === "") return [];
+    const results = index.libraries.filter(match(terms)).map(uniqueId);
+    console.log(results);
+    return results.slice(0, 10);
+}
+
+export const HomeScreen = (props: HomeProps) => {
+    const [hits, setHits] = React.useState<string[]>([]);
+    useEffect(() => {
+        setHits(searchResults(props.terms, props.index));
+    }, [props.terms, props.index]);
+
+    return (
+        <div style={{ height: "100vh", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <img alt="Impact Logo" style={{ width: 400 }} src={logo}></img>
             <p
                 style={{
                     fontSize: "200%",
@@ -58,11 +89,31 @@ export const HomeScreen = (props: HomeProps) => {
                     value={props.terms}
                 />
             </div>
-            <div style={{ marginTop: "10px", width: "45vw", minWidth: "20em" }}>
-                <Hit first={true} title="Buildings" text="A library of building components" />
-                <Hit title="Next" text="More text" />
-                <Hit last={true} title="Vehicle Dynamics" text="A library about vehicle dynamics" />
-            </div>
+
+            {hits.length === 0 ? (
+                props.terms && <p>No matching search results</p>
+            ) : (
+                <div
+                    style={{
+                        borderRadius: "5px",
+                        border: "1px solid #eee",
+                        marginTop: "10px",
+                        width: "45vw",
+                        minWidth: "20em",
+                    }}
+                >
+                    {/* <div style={{ overflowY: "scroll" }}>
+                        {hits.map(hit => (
+                            <Hit key={hit} id={hit} index={props.index} />
+                        ))}
+                    </div> */}
+                    <ButtonGroup vertical={true} style={{ width: "100%" }}>
+                        {hits.map(hit => (
+                            <ButtonHit key={hit} id={hit} index={props.index} setSelected={props.setSelected} />
+                        ))}
+                    </ButtonGroup>
+                </div>
+            )}
         </div>
     );
 };
