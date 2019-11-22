@@ -1,51 +1,52 @@
 import React, { useEffect } from "react";
 import logo from "../impact-logo.svg";
-import { InputGroup, ButtonGroup, Button, Icon } from "@blueprintjs/core";
+import { InputGroup, ButtonGroup, Button, Icon, Collapse } from "@blueprintjs/core";
 
 import "./hover.css";
 import { ImpactIndex, Library, uniqueId } from "../data";
-
-export interface HomeProps {
-    terms: string;
-    setTerms: (v: string) => void;
-    setSelected: (v: string) => void;
-    index: ImpactIndex;
-}
+import { LibraryReport } from "../components/library-report";
 
 export interface HitProps {
-    id: string;
-    index: ImpactIndex;
-    setSelected: (v: string) => void;
+    lib: Library;
+    selected: string | null;
+    setSelected: (v: string | null) => void;
 }
 
 export const Hit = (props: HitProps) => {
-    const lib = props.index.libraries.find(lib => uniqueId(lib) === props.id);
-    if (!lib) return <p>Unknown library id {props.id}</p>;
     return (
         <div className="hover">
-            <h4 style={{ margin: 2, padding: 2 }}>{lib.name}</h4>
-            <p style={{ margin: 2, padding: 2 }}>{lib.description}</p>
+            <h4 style={{ margin: 2, padding: 2 }}>{props.lib.name}</h4>
+            <p style={{ margin: 2, padding: 2 }}>{props.lib.description}</p>
         </div>
     );
 };
 
+function truncate(str: string): string {
+    if (str.length > 200) return str.slice(0, 197) + "...";
+    return str;
+}
+
 export const ButtonHit = (props: HitProps) => {
-    const lib = props.index.libraries.find(lib => uniqueId(lib) === props.id);
-    if (!lib) return <p>Unknown library id {props.id}</p>;
     return (
         <Button
             text={
                 <>
                     <p style={{ float: "right" }}>
-                        <span style={{ marginRight: 10 }}>{lib.stars}</span>
+                        <span style={{ marginRight: 10 }}>{props.lib.stars}</span>
                         <Icon icon="star" />
                     </p>
-                    <h4 style={{ marginTop: 2 }}>{lib.name}</h4>
-                    <p style={{ width: "100%" }}>{lib.description}</p>
+                    <h4 style={{ marginTop: 2 }}>{props.lib.name}</h4>
+                    <p style={{ width: "100%" }}>
+                        <span>{truncate(props.lib.description)}</span>
+                    </p>
+                    <Collapse isOpen={uniqueId(props.lib) === props.selected}>
+                        <LibraryReport lib={props.lib} />
+                    </Collapse>
                 </>
             }
             onClick={() => {
-                props.setSelected(props.id);
+                const uid = uniqueId(props.lib);
+                uid === props.selected ? props.setSelected(null) : props.setSelected(uid);
             }}
         />
     );
@@ -57,15 +58,21 @@ function match(term: string) {
     };
 }
 
-function searchResults(terms: string, index: ImpactIndex): string[] {
+function searchResults(terms: string, index: ImpactIndex): Library[] {
     //if (terms === "") return [];
-    const results = index.libraries.filter(match(terms)).map(uniqueId);
-    console.log(results);
-    return results.slice(0, 10);
+    return index.libraries.filter(match(terms));
+}
+
+export interface HomeProps {
+    terms: string;
+    setTerms: (v: string) => void;
+    selected: string | null;
+    setSelected: (v: string | null) => void;
+    index: ImpactIndex;
 }
 
 export const HomeScreen = (props: HomeProps) => {
-    const [hits, setHits] = React.useState<string[]>([]);
+    const [hits, setHits] = React.useState<Library[]>([]);
     useEffect(() => {
         setHits(searchResults(props.terms, props.index));
     }, [props.terms, props.index]);
@@ -112,9 +119,16 @@ export const HomeScreen = (props: HomeProps) => {
                         ))}
                     </div> */}
                     <ButtonGroup vertical={true} style={{ width: "100%" }}>
-                        {hits.map(hit => (
-                            <ButtonHit key={hit} id={hit} index={props.index} setSelected={props.setSelected} />
-                        ))}
+                        {hits.map(lib => {
+                            return (
+                                <ButtonHit
+                                    key={uniqueId(lib)}
+                                    lib={lib}
+                                    selected={props.selected}
+                                    setSelected={props.setSelected}
+                                />
+                            );
+                        })}
                     </ButtonGroup>
                 </div>
             )}
