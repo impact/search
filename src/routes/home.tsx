@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import logo from "../impact-logo.svg";
-import { InputGroup, ButtonGroup, Button } from "@blueprintjs/core";
+import { InputGroup, ButtonGroup, Button, Icon } from "@blueprintjs/core";
 
 import "./hover.css";
 import { ImpactIndex, Library, uniqueId } from "../data";
@@ -36,6 +36,10 @@ export const ButtonHit = (props: HitProps) => {
         <Button
             text={
                 <>
+                    <p style={{ float: "right" }}>
+                        <span style={{ marginRight: 10 }}>{lib.stars}</span>
+                        <Icon icon="star" />
+                    </p>
                     <h4 style={{ marginTop: 2 }}>{lib.name}</h4>
                     <p style={{ width: "100%" }}>{lib.description}</p>
                 </>
