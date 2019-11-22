@@ -10,13 +10,24 @@ export interface LibraryReportProps {
 export const LibraryReport = (props: LibraryReportProps) => (
     <div>
         <p style={{ width: "100%" }}>
+            <b>
+                <span>{props.lib.name}</span>
+            </b>
+        </p>
+
+        <p style={{ width: "100%" }}>
             <span>{props.lib.description}</span>
         </p>
 
         <p>
-            <b>Versions</b>:{" "}
+            <b>
+                <small>Versions</small>
+            </b>
+            <br />
             {Object.keys(props.lib.versions).map(version => (
-                <Tag intent="success">{version}</Tag>
+                <Tag style={{ margin: 2 }} intent="success">
+                    {version}
+                </Tag>
             ))}
         </p>
         <p>

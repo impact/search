@@ -1,7 +1,6 @@
 import React from "react";
 import { HomeScreen } from "./routes";
 import { ImpactIndex } from "./data";
-import { LibraryInfo } from "./components/library-info";
 
 export interface AppProps {
     index: ImpactIndex;
@@ -12,8 +11,13 @@ const App = (props: AppProps) => {
     const [selected, setSelected] = React.useState<string | null>(null);
     return (
         <div>
-            <HomeScreen index={props.index} terms={terms} setTerms={setTerms} selected={selected} setSelected={setSelected} />
-            {/* <LibraryInfo index={props.index} selected={selected} setSelected={setSelected} /> */}
+            <HomeScreen
+                index={props.index}
+                terms={terms}
+                setTerms={setTerms}
+                selected={selected}
+                setSelected={setSelected}
+            />
         </div>
     );
 };
