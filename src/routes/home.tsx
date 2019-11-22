@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import logo from "../impact-logo.svg";
-import { InputGroup, ButtonGroup, Button, Icon, Collapse } from "@blueprintjs/core";
+import { InputGroup, ButtonGroup, Button, Icon, Collapse, Card } from "@blueprintjs/core";
 
 import "./hover.css";
 import { ImpactIndex, Library, uniqueId } from "../data";
@@ -25,6 +25,21 @@ function truncate(str: string): string {
     if (str.length > 200) return str.slice(0, 197) + "...";
     return str;
 }
+
+export const CardHit = (props: HitProps) => {
+    return (
+        <Card onMouseEnter={() => props.setSelected(uniqueId(props.lib))} onMouseLeave={() => props.setSelected(null)}>
+            <p style={{ float: "right" }}>
+                <span style={{ marginRight: 10 }}>{props.lib.stars}</span>
+                <Icon icon="star" />
+            </p>
+            <h4 style={{ marginTop: 2 }}>{props.lib.name}</h4>
+            <Collapse isOpen={uniqueId(props.lib) === props.selected}>
+                <LibraryReport lib={props.lib} />
+            </Collapse>
+        </Card>
+    );
+};
 
 export const ButtonHit = (props: HitProps) => {
     return (
@@ -121,7 +136,7 @@ export const HomeScreen = (props: HomeProps) => {
                     <ButtonGroup vertical={true} style={{ width: "100%" }}>
                         {hits.map(lib => {
                             return (
-                                <ButtonHit
+                                <CardHit
                                     key={uniqueId(lib)}
                                     lib={lib}
                                     selected={props.selected}

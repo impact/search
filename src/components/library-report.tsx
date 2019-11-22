@@ -1,6 +1,6 @@
 import React from "react";
 import { Library } from "../data";
-import { Classes, Tag } from "@blueprintjs/core";
+import { Tag } from "@blueprintjs/core";
 import { IconLink } from ".";
 
 export interface LibraryReportProps {
@@ -8,10 +8,11 @@ export interface LibraryReportProps {
 }
 
 export const LibraryReport = (props: LibraryReportProps) => (
-    <div className={Classes.DIALOG_BODY}>
-        <p>
-            <strong>{props.lib.description}</strong>
+    <div>
+        <p style={{ width: "100%" }}>
+            <span>{props.lib.description}</span>
         </p>
+
         <p>
             <b>Versions</b>:{" "}
             {Object.keys(props.lib.versions).map(version => (
